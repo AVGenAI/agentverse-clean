@@ -72,5 +72,4 @@ SERVICENOW_PASSWORD=your-password
 MIT
 
 ## 👥 Contributors
-- AV Labs Team
-- Claude (Anthropic) - AI Development Partner
+- A\V
