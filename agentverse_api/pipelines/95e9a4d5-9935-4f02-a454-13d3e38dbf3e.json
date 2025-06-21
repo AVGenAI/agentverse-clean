@@ -1,0 +1,52 @@
+{
+  "id": "95e9a4d5-9935-4f02-a454-13d3e38dbf3e",
+  "name": "Test Pipeline",
+  "description": "A test pipeline to verify functionality",
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "input",
+      "label": "Input Node",
+      "position": {
+        "x": 100.0,
+        "y": 100.0
+      },
+      "config": {}
+    },
+    {
+      "id": "agent-1",
+      "type": "agent",
+      "label": "AI Agent",
+      "position": {
+        "x": 300.0,
+        "y": 100.0
+      },
+      "config": {
+        "agent_id": "test-agent",
+        "model": "gpt-4o-mini"
+      }
+    },
+    {
+      "id": "output-1",
+      "type": "output",
+      "label": "Output Node",
+      "position": {
+        "x": 500.0,
+        "y": 100.0
+      },
+      "config": {}
+    }
+  ],
+  "connections": [
+    {
+      "from": "input-1",
+      "to": "agent-1"
+    },
+    {
+      "from": "agent-1",
+      "to": "output-1"
+    }
+  ],
+  "created_at": "2025-06-21T14:59:26.798904",
+  "updated_at": "2025-06-21T14:59:26.798918"
+}

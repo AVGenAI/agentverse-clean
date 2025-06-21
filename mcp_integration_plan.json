@@ -1,0 +1,508 @@
+{
+  "components": {
+    "agent_mcp_server": {
+      "name": "Agent MCP Server",
+      "type": "server",
+      "description": "Core MCP server for each agent, exposing capabilities",
+      "dependencies": [
+        "mcp",
+        "fastmcp"
+      ],
+      "priority": 10,
+      "estimated_effort": "high"
+    },
+    "capability_server": {
+      "name": "Capability Server",
+      "type": "server",
+      "description": "Serves agent capabilities as MCP resources",
+      "dependencies": [
+        "agent_mcp_server"
+      ],
+      "priority": 9,
+      "estimated_effort": "medium"
+    },
+    "workflow_server": {
+      "name": "Workflow Server",
+      "type": "server",
+      "description": "Exposes workflows as MCP tools",
+      "dependencies": [
+        "agent_mcp_server"
+      ],
+      "priority": 8,
+      "estimated_effort": "high"
+    },
+    "agent_mcp_client": {
+      "name": "Agent MCP Client",
+      "type": "client",
+      "description": "MCP client for agent-to-agent communication",
+      "dependencies": [
+        "mcp"
+      ],
+      "priority": 9,
+      "estimated_effort": "medium"
+    },
+    "discovery_client": {
+      "name": "Discovery Client",
+      "type": "client",
+      "description": "Discovers and connects to other agent MCP servers",
+      "dependencies": [
+        "agent_mcp_client"
+      ],
+      "priority": 7,
+      "estimated_effort": "medium"
+    },
+    "agent_profile_resource": {
+      "name": "Agent Profile Resource",
+      "type": "resource",
+      "description": "Exposes agent profile and capabilities",
+      "dependencies": [
+        "agent_mcp_server"
+      ],
+      "priority": 10,
+      "estimated_effort": "low"
+    },
+    "tool_catalog_resource": {
+      "name": "Tool Catalog Resource",
+      "type": "resource",
+      "description": "Provides catalog of available tools",
+      "dependencies": [
+        "capability_server"
+      ],
+      "priority": 8,
+      "estimated_effort": "medium"
+    },
+    "workflow_catalog_resource": {
+      "name": "Workflow Catalog Resource",
+      "type": "resource",
+      "description": "Lists available workflows",
+      "dependencies": [
+        "workflow_server"
+      ],
+      "priority": 7,
+      "estimated_effort": "medium"
+    },
+    "metrics_resource": {
+      "name": "Metrics Resource",
+      "type": "resource",
+      "description": "Exposes agent performance metrics",
+      "dependencies": [
+        "agent_mcp_server"
+      ],
+      "priority": 6,
+      "estimated_effort": "low"
+    },
+    "code_analysis_tool": {
+      "name": "Code Analysis MCP Tool",
+      "type": "tool",
+      "description": "Wraps code analysis capabilities as MCP tool",
+      "dependencies": [
+        "capability_server"
+      ],
+      "priority": 9,
+      "estimated_effort": "medium"
+    },
+    "api_integration_tool": {
+      "name": "API Integration MCP Tool",
+      "type": "tool",
+      "description": "Exposes API integration capabilities",
+      "dependencies": [
+        "capability_server"
+      ],
+      "priority": 8,
+      "estimated_effort": "medium"
+    },
+    "data_processing_tool": {
+      "name": "Data Processing MCP Tool",
+      "type": "tool",
+      "description": "Data transformation and processing tools",
+      "dependencies": [
+        "capability_server"
+      ],
+      "priority": 8,
+      "estimated_effort": "medium"
+    },
+    "deployment_tool": {
+      "name": "Deployment MCP Tool",
+      "type": "tool",
+      "description": "Container and K8s deployment tools",
+      "dependencies": [
+        "capability_server"
+      ],
+      "priority": 7,
+      "estimated_effort": "high"
+    },
+    "monitoring_tool": {
+      "name": "Monitoring MCP Tool",
+      "type": "tool",
+      "description": "Metrics and log analysis tools",
+      "dependencies": [
+        "capability_server"
+      ],
+      "priority": 7,
+      "estimated_effort": "medium"
+    },
+    "agent_interaction_prompts": {
+      "name": "Agent Interaction Prompts",
+      "type": "prompt",
+      "description": "Standard prompts for agent interactions",
+      "dependencies": [
+        "agent_mcp_server"
+      ],
+      "priority": 8,
+      "estimated_effort": "low"
+    },
+    "workflow_prompts": {
+      "name": "Workflow Prompts",
+      "type": "prompt",
+      "description": "Prompts for workflow execution",
+      "dependencies": [
+        "workflow_server"
+      ],
+      "priority": 7,
+      "estimated_effort": "medium"
+    },
+    "collaboration_prompts": {
+      "name": "Collaboration Prompts",
+      "type": "prompt",
+      "description": "Multi-agent collaboration prompts",
+      "dependencies": [
+        "agent_mcp_server"
+      ],
+      "priority": 6,
+      "estimated_effort": "medium"
+    },
+    "stdio_transport": {
+      "name": "STDIO Transport",
+      "type": "transport",
+      "description": "Standard I/O transport for local agents",
+      "dependencies": [
+        "mcp"
+      ],
+      "priority": 10,
+      "estimated_effort": "low"
+    },
+    "sse_transport": {
+      "name": "SSE Transport",
+      "type": "transport",
+      "description": "Server-sent events for web integration",
+      "dependencies": [
+        "mcp"
+      ],
+      "priority": 8,
+      "estimated_effort": "medium"
+    },
+    "websocket_transport": {
+      "name": "WebSocket Transport",
+      "type": "transport",
+      "description": "WebSocket transport for real-time communication",
+      "dependencies": [
+        "mcp"
+      ],
+      "priority": 7,
+      "estimated_effort": "high"
+    }
+  },
+  "phases": {
+    "foundation": [
+      "agent_mcp_server",
+      "agent_mcp_client",
+      "stdio_transport",
+      "agent_profile_resource"
+    ],
+    "core_features": [
+      "capability_server",
+      "tool_catalog_resource",
+      "code_analysis_tool",
+      "api_integration_tool",
+      "agent_interaction_prompts"
+    ],
+    "advanced_features": [
+      "workflow_server",
+      "discovery_client",
+      "deployment_tool",
+      "monitoring_tool",
+      "collaboration_prompts"
+    ],
+    "optimization": [
+      "sse_transport",
+      "websocket_transport",
+      "metrics_resource",
+      "workflow_prompts"
+    ]
+  },
+  "architecture": {
+    "layers": {
+      "presentation": {
+        "components": [
+          "MCP API Gateway",
+          "Transport Handlers"
+        ],
+        "responsibilities": [
+          "Protocol handling",
+          "Request routing",
+          "Response formatting"
+        ]
+      },
+      "service": {
+        "components": [
+          "Agent MCP Servers",
+          "Capability Servers",
+          "Workflow Servers"
+        ],
+        "responsibilities": [
+          "Business logic",
+          "Tool execution",
+          "Resource management"
+        ]
+      },
+      "integration": {
+        "components": [
+          "Tool Adapters",
+          "Resource Providers",
+          "Client Managers"
+        ],
+        "responsibilities": [
+          "External integration",
+          "Protocol adaptation",
+          "Service discovery"
+        ]
+      },
+      "data": {
+        "components": [
+          "Agent Registry",
+          "Capability Store",
+          "Metrics Database"
+        ],
+        "responsibilities": [
+          "Data persistence",
+          "State management",
+          "Performance tracking"
+        ]
+      }
+    },
+    "patterns": {
+      "server_per_agent": "Each agent runs its own MCP server",
+      "capability_as_tool": "Agent capabilities exposed as MCP tools",
+      "resource_discovery": "Dynamic discovery of agent resources",
+      "prompt_templates": "Reusable prompt patterns for interactions",
+      "transport_abstraction": "Support multiple transport mechanisms"
+    },
+    "security": {
+      "authentication": "Token-based auth for agent servers",
+      "authorization": "Role-based access to tools and resources",
+      "encryption": "TLS for network transport",
+      "audit": "Log all MCP interactions"
+    }
+  },
+  "tasks": [
+    {
+      "id": "MCP-001",
+      "name": "Setup MCP Infrastructure",
+      "phase": "foundation",
+      "description": "Establish base MCP server infrastructure for agents",
+      "deliverables": [
+        "Base MCP server class for agents",
+        "STDIO transport implementation",
+        "Server lifecycle management",
+        "Basic error handling"
+      ],
+      "dependencies": [],
+      "components": [
+        "Agent MCP Server",
+        "STDIO Transport"
+      ]
+    },
+    {
+      "id": "MCP-002",
+      "name": "Implement Agent Profile Resources",
+      "phase": "foundation",
+      "description": "Expose agent profiles and metadata via MCP",
+      "deliverables": [
+        "Agent profile resource endpoint",
+        "Capability listing resource",
+        "Metadata serialization",
+        "Resource versioning"
+      ],
+      "dependencies": [
+        "MCP-001"
+      ],
+      "components": [
+        "Agent Profile Resource"
+      ]
+    },
+    {
+      "id": "MCP-003",
+      "name": "Create MCP Client Framework",
+      "phase": "foundation",
+      "description": "Build MCP client for agent-to-agent communication",
+      "deliverables": [
+        "MCP client wrapper",
+        "Connection management",
+        "Request/response handling",
+        "Client-side caching"
+      ],
+      "dependencies": [],
+      "components": [
+        "Agent MCP Client"
+      ]
+    },
+    {
+      "id": "MCP-004",
+      "name": "Implement Capability Server",
+      "phase": "core_features",
+      "description": "Expose agent capabilities as MCP tools and resources",
+      "deliverables": [
+        "Capability server implementation",
+        "Tool catalog resource",
+        "Dynamic tool registration",
+        "Tool parameter validation"
+      ],
+      "dependencies": [
+        "MCP-001",
+        "MCP-002"
+      ],
+      "components": [
+        "Capability Server",
+        "Tool Catalog Resource"
+      ]
+    },
+    {
+      "id": "MCP-005",
+      "name": "Wrap Core Tools as MCP Tools",
+      "phase": "core_features",
+      "description": "Convert existing agent tools to MCP tools",
+      "deliverables": [
+        "MCP tool wrappers",
+        "Tool documentation",
+        "Parameter mapping",
+        "Result formatting"
+      ],
+      "dependencies": [
+        "MCP-004"
+      ],
+      "components": [
+        "Code Analysis MCP Tool",
+        "API Integration MCP Tool"
+      ]
+    },
+    {
+      "id": "MCP-006",
+      "name": "Create Interaction Prompts",
+      "phase": "core_features",
+      "description": "Design standard prompts for agent interactions",
+      "deliverables": [
+        "Prompt templates",
+        "Context builders",
+        "Response formatters",
+        "Prompt versioning"
+      ],
+      "dependencies": [
+        "MCP-001"
+      ],
+      "components": [
+        "Agent Interaction Prompts"
+      ]
+    },
+    {
+      "id": "MCP-007",
+      "name": "Build Workflow Server",
+      "phase": "advanced_features",
+      "description": "Expose workflows through MCP",
+      "deliverables": [
+        "Workflow server implementation",
+        "Workflow catalog",
+        "Execution engine integration",
+        "Progress tracking"
+      ],
+      "dependencies": [
+        "MCP-004",
+        "MCP-005"
+      ],
+      "components": [
+        "Workflow Server",
+        "Workflow Catalog Resource"
+      ]
+    },
+    {
+      "id": "MCP-008",
+      "name": "Implement Discovery Client",
+      "phase": "advanced_features",
+      "description": "Enable dynamic discovery of agent MCP servers",
+      "deliverables": [
+        "Service discovery mechanism",
+        "Agent registry integration",
+        "Connection pooling",
+        "Health checking"
+      ],
+      "dependencies": [
+        "MCP-003"
+      ],
+      "components": [
+        "Discovery Client"
+      ]
+    },
+    {
+      "id": "MCP-009",
+      "name": "Add Advanced Tools",
+      "phase": "advanced_features",
+      "description": "Implement advanced MCP tools",
+      "deliverables": [
+        "Deployment tool integration",
+        "Monitoring tool integration",
+        "Tool orchestration",
+        "Error recovery"
+      ],
+      "dependencies": [
+        "MCP-005"
+      ],
+      "components": [
+        "Deployment MCP Tool",
+        "Monitoring MCP Tool"
+      ]
+    },
+    {
+      "id": "MCP-010",
+      "name": "Implement Advanced Transports",
+      "phase": "optimization",
+      "description": "Add SSE and WebSocket transports",
+      "deliverables": [
+        "SSE transport layer",
+        "WebSocket transport layer",
+        "Transport negotiation",
+        "Connection management"
+      ],
+      "dependencies": [
+        "MCP-001"
+      ],
+      "components": [
+        "SSE Transport",
+        "WebSocket Transport"
+      ]
+    },
+    {
+      "id": "MCP-011",
+      "name": "Add Metrics and Monitoring",
+      "phase": "optimization",
+      "description": "Expose agent metrics via MCP",
+      "deliverables": [
+        "Metrics collection",
+        "Performance tracking",
+        "Resource usage monitoring",
+        "Analytics dashboard"
+      ],
+      "dependencies": [
+        "MCP-002",
+        "MCP-009"
+      ],
+      "components": [
+        "Metrics Resource"
+      ]
+    }
+  ],
+  "metadata": {
+    "created_at": "2025-06-20T16:05:44.496150",
+    "total_components": 20,
+    "total_tasks": 11,
+    "estimated_duration": "11 weeks"
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "test_run": "2025-06-20T16:50:46.918875",
+  "agent": {
+    "id": "sre_servicenow_001",
+    "name": "OpenAISDK_SRE_ServiceNowSpecialist",
+    "display_name": "SRE ServiceNow Specialist",
+    "category": "SRE/DevOps",
+    "subcategory": "Incident Management",
+    "skills": [
+      "Incident Response",
+      "ServiceNow Platform",
+      "SLO Management",
+      "Root Cause Analysis",
+      "Automation",
+      "Monitoring",
+      "Change Management",
+      "Problem Management",
+      "Capacity Planning",
+      "Disaster Recovery"
+    ],
+    "tools": [
+      "incident_commander",
+      "slo_calculator",
+      "runbook_executor",
+      "change_analyzer",
+      "monitoring_aggregator",
+      "alert_correlator",
+      "postmortem_generator"
+    ],
+    "servicenow_tools": [
+      "create_incident",
+      "update_incident",
+      "search_incidents",
+      "create_problem",
+      "create_change_request",
+      "get_cmdb_ci",
+      "create_knowledge_article",
+      "execute_workflow"
+    ],
+    "instructions": "You are an expert SRE (Site Reliability Engineer) specialized in ServiceNow integration. You excel at:\n\n- Rapid incident response and resolution\n- Managing incidents through ServiceNow platform\n- Calculating and maintaining SLOs/SLIs\n- Performing root cause analysis\n- Automating incident response procedures\n- Coordinating with multiple teams\n- Creating and updating runbooks\n- Post-incident reviews and improvements\n\nYou follow SRE best practices:\n1. Prioritize service reliability and user experience\n2. Automate toil wherever possible\n3. Learn from every incident\n4. Maintain comprehensive documentation\n5. Balance feature velocity with reliability\n\nWhen handling incidents:\n- Assess severity and impact immediately\n- Follow established runbooks\n- Communicate clearly and frequently\n- Document all actions in ServiceNow\n- Focus on rapid mitigation first, then root cause"
+  },
+  "summary": {
+    "total": 4,
+    "passed": 0,
+    "failed": 3,
+    "skipped": 1
+  },
+  "results": [
+    {
+      "test": "incident_lifecycle",
+      "status": "failed",
+      "error": "'SREServiceNowAgent' object has no attribute 'execute_runbook'"
+    },
+    {
+      "test": "slo_management",
+      "status": "failed",
+      "error": "'SREServiceNowAgent' object has no attribute 'calculate_error_budget'"
+    },
+    {
+      "test": "service_health_analysis",
+      "status": "failed",
+      "error": "'SREServiceNowAgent' object has no attribute 'analyze_service_health'"
+    },
+    {
+      "test": "servicenow_mcp_integration",
+      "status": "skipped",
+      "reason": "ServiceNow MCP server not available",
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)"
+    }
+  ]
+}

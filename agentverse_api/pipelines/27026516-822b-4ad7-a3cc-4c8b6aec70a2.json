@@ -1,0 +1,51 @@
+{
+  "id": "27026516-822b-4ad7-a3cc-4c8b6aec70a2",
+  "name": "Test Pipeline",
+  "description": "A simple test pipeline",
+  "nodes": [
+    {
+      "id": "input-1",
+      "type": "input",
+      "label": "User Input",
+      "position": {
+        "x": 100.0,
+        "y": 200.0
+      },
+      "config": {}
+    },
+    {
+      "id": "text-1",
+      "type": "text",
+      "label": "Text Processor",
+      "position": {
+        "x": 300.0,
+        "y": 200.0
+      },
+      "config": {
+        "operation": "uppercase"
+      }
+    },
+    {
+      "id": "output-1",
+      "type": "output",
+      "label": "Result",
+      "position": {
+        "x": 500.0,
+        "y": 200.0
+      },
+      "config": {}
+    }
+  ],
+  "connections": [
+    {
+      "from": "input-1",
+      "to": "text-1"
+    },
+    {
+      "from": "text-1",
+      "to": "output-1"
+    }
+  ],
+  "created_at": "2025-06-21T15:03:36.085655",
+  "updated_at": "2025-06-21T15:03:36.085675"
+}

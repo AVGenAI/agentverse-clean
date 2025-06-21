@@ -1,0 +1,147 @@
+# AgentVerse to ServiceNow MCP Integration Configuration
+# Maps AgentVerse agents to ServiceNow tool packages
+
+# ServiceNow connection settings
+servicenow:
+  instance_url: "${SERVICENOW_INSTANCE_URL}"
+  auth_type: "basic"  # basic, oauth, or api_key
+  credentials:
+    username: "${SERVICENOW_USERNAME}"
+    password: "${SERVICENOW_PASSWORD}"
+
+# Tool package mappings for different agent types
+agent_tool_packages:
+  # IT Service Management Agents
+  support_agents:
+    - agent_pattern: ".*Support.*|.*HelpDesk.*|.*ServiceDesk.*"
+      tool_packages:
+        - "service_desk"
+        - "incident_management"
+        - "knowledge_management"
+      
+  # Change Management Agents  
+  change_agents:
+    - agent_pattern: ".*DevOps.*|.*SRE.*|.*ChangeManager.*"
+      tool_packages:
+        - "change_coordinator"
+        - "change_management"
+        - "deployment_management"
+        
+  # Development Agents
+  engineering_agents:
+    - agent_pattern: ".*Developer.*|.*Engineer.*|.*Architect.*"
+      tool_packages:
+        - "developer"
+        - "catalog_builder"
+        - "workflow_designer"
+        
+  # Security Agents
+  security_agents:
+    - agent_pattern: ".*Security.*|.*Compliance.*|.*Audit.*"
+      tool_packages:
+        - "security_operations"
+        - "vulnerability_management"
+        - "compliance_management"
+        
+  # Business Process Agents
+  business_agents:
+    - agent_pattern: ".*Business.*|.*Analyst.*|.*Manager.*"
+      tool_packages:
+        - "business_analyst"
+        - "project_manager"
+        - "service_catalog"
+
+# Workflow mappings
+workflow_mappings:
+  # Map AgentVerse workflows to ServiceNow workflows
+  incident_response:
+    servicenow_workflow: "incident_resolution"
+    required_tools:
+      - "create_incident"
+      - "update_incident"
+      - "assign_incident"
+      - "resolve_incident"
+      
+  change_deployment:
+    servicenow_workflow: "change_implementation"
+    required_tools:
+      - "create_change_request"
+      - "assess_change_risk"
+      - "schedule_change"
+      - "implement_change"
+      
+  service_request:
+    servicenow_workflow: "service_fulfillment"
+    required_tools:
+      - "create_request"
+      - "approve_request"
+      - "fulfill_request"
+      - "close_request"
+
+# Agent capability enhancements for ServiceNow
+capability_enhancements:
+  incident_management:
+    tools:
+      - "create_incident"
+      - "update_incident"
+      - "search_incidents"
+      - "assign_incident"
+      - "resolve_incident"
+      - "create_incident_task"
+    skills:
+      - "ITIL"
+      - "Incident Resolution"
+      - "ServiceNow Platform"
+      
+  change_management:
+    tools:
+      - "create_change_request"
+      - "update_change_request"
+      - "assess_change_risk"
+      - "schedule_change"
+      - "create_change_task"
+    skills:
+      - "Change Advisory Board"
+      - "Risk Assessment"
+      - "ServiceNow Platform"
+      
+  service_catalog:
+    tools:
+      - "search_catalog_items"
+      - "create_request"
+      - "get_request_status"
+      - "add_request_comment"
+    skills:
+      - "Service Catalog Management"
+      - "Request Fulfillment"
+      - "ServiceNow Platform"
+
+# Testing scenarios
+test_scenarios:
+  - name: "IT Support Agent Incident Creation"
+    agent_type: "OpenAISDK_Support_L1Support"
+    tool_package: "service_desk"
+    test_steps:
+      - tool: "create_incident"
+        params:
+          short_description: "Test incident from AgentVerse"
+          urgency: 3
+          impact: 3
+          
+  - name: "DevOps Agent Change Request"
+    agent_type: "OpenAISDK_DevOps_DevOpsEngineer"
+    tool_package: "change_coordinator"
+    test_steps:
+      - tool: "create_change_request"
+        params:
+          short_description: "Automated deployment change"
+          type: "standard"
+          
+  - name: "Security Agent Vulnerability Check"
+    agent_type: "OpenAISDK_Security_SecurityExpert"
+    tool_package: "security_operations"
+    test_steps:
+      - tool: "search_vulnerabilities"
+        params:
+          severity: "high"
+          state: "open"

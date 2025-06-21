@@ -1,0 +1,863 @@
+{
+  "timestamp": "2025-06-20T16:49:39.549872",
+  "total_permutations_tested": 70,
+  "mcp_servers": [
+    "ServiceNow-Production",
+    "PostgreSQL-Analytics",
+    "Prometheus-Monitoring",
+    "Jenkins-CICD",
+    "Slack-Communication",
+    "AWS-CloudProvider",
+    "Elasticsearch-Analytics"
+  ],
+  "test_results": [
+    {
+      "agent": "OpenAISDK_DevOps_openshiftcontainerExpert_E",
+      "server": "ServiceNow-Production",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_openshiftcontainerExpert_E",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_openshiftcontainerExpert_E",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_openshiftcontainerExpert_E",
+      "server": "Jenkins-CICD",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_openshiftcontainerExpert_E",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_openshiftcontainerExpert_E",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_openshiftcontainerExpert_E",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_CatalogMgmt_D",
+      "server": "ServiceNow-Production",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_CatalogMgmt_D",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_CatalogMgmt_D",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_CatalogMgmt_D",
+      "server": "Jenkins-CICD",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_CatalogMgmt_D",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_CatalogMgmt_D",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_CatalogMgmt_D",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_operationsprocessoptimizationExpert_E",
+      "server": "ServiceNow-Production",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_operationsprocessoptimizationExpert_E",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_operationsprocessoptimizationExpert_E",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_operationsprocessoptimizationExpert_E",
+      "server": "Jenkins-CICD",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_operationsprocessoptimizationExpert_E",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_operationsprocessoptimizationExpert_E",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_operationsprocessoptimizationExpert_E",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_ServiceNowExpert_B_6055",
+      "server": "ServiceNow-Production",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_ServiceNowExpert_B_6055",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_ServiceNowExpert_B_6055",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_ServiceNowExpert_B_6055",
+      "server": "Jenkins-CICD",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_ServiceNowExpert_B_6055",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_ServiceNowExpert_B_6055",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_ServiceNow_ServiceNowExpert_B_6055",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_supplychainwarehousingExpert",
+      "server": "ServiceNow-Production",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_supplychainwarehousingExpert",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_supplychainwarehousingExpert",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_supplychainwarehousingExpert",
+      "server": "Jenkins-CICD",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_supplychainwarehousingExpert",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_supplychainwarehousingExpert",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Business_supplychainwarehousingExpert",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_srepostmortemExpert",
+      "server": "ServiceNow-Production",
+      "compatibility": "LOW",
+      "score": 0.3333333333333333,
+      "scores": {
+        "skill_score": 0.3333333333333333,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_srepostmortemExpert",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_srepostmortemExpert",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_srepostmortemExpert",
+      "server": "Jenkins-CICD",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_srepostmortemExpert",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_srepostmortemExpert",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_srepostmortemExpert",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Engineering_ethereumsolidityExpert",
+      "server": "ServiceNow-Production",
+      "compatibility": "MINIMAL",
+      "score": 0.0625,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.25
+      }
+    },
+    {
+      "agent": "OpenAISDK_Engineering_ethereumsolidityExpert",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Engineering_ethereumsolidityExpert",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Engineering_ethereumsolidityExpert",
+      "server": "Jenkins-CICD",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Engineering_ethereumsolidityExpert",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Engineering_ethereumsolidityExpert",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Engineering_ethereumsolidityExpert",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Data_&_Analytics_metabasebianalystExpert",
+      "server": "ServiceNow-Production",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Data_&_Analytics_metabasebianalystExpert",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Data_&_Analytics_metabasebianalystExpert",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Data_&_Analytics_metabasebianalystExpert",
+      "server": "Jenkins-CICD",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Data_&_Analytics_metabasebianalystExpert",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Data_&_Analytics_metabasebianalystExpert",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Data_&_Analytics_metabasebianalystExpert",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_splunkmonitoringExpert_B",
+      "server": "ServiceNow-Production",
+      "compatibility": "LOW",
+      "score": 0.375,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_splunkmonitoringExpert_B",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_splunkmonitoringExpert_B",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "LOW",
+      "score": 0.375,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_splunkmonitoringExpert_B",
+      "server": "Jenkins-CICD",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_splunkmonitoringExpert_B",
+      "server": "Slack-Communication",
+      "compatibility": "MINIMAL",
+      "score": 0.125,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_splunkmonitoringExpert_B",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_DevOps_splunkmonitoringExpert_B",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Support_productsupportdocumentationExpert_C",
+      "server": "ServiceNow-Production",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 1.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Support_productsupportdocumentationExpert_C",
+      "server": "PostgreSQL-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Support_productsupportdocumentationExpert_C",
+      "server": "Prometheus-Monitoring",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Support_productsupportdocumentationExpert_C",
+      "server": "Jenkins-CICD",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Support_productsupportdocumentationExpert_C",
+      "server": "Slack-Communication",
+      "compatibility": "LOW",
+      "score": 0.25,
+      "scores": {
+        "skill_score": 0.5,
+        "tool_score": 0.5,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Support_productsupportdocumentationExpert_C",
+      "server": "AWS-CloudProvider",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    },
+    {
+      "agent": "OpenAISDK_Support_productsupportdocumentationExpert_C",
+      "server": "Elasticsearch-Analytics",
+      "compatibility": "INCOMPATIBLE",
+      "score": 0.0,
+      "scores": {
+        "skill_score": 0.0,
+        "tool_score": 0.0,
+        "domain_score": 0.0,
+        "capability_score": 0.0
+      }
+    }
+  ],
+  "summary": {
+    "average_compatibility_score": 0.0681547619047619,
+    "compatibility_distribution": {
+      "LOW": 13,
+      "INCOMPATIBLE": 47,
+      "MINIMAL": 10
+    }
+  }
+}

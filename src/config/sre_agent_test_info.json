@@ -1,0 +1,19 @@
+{
+  "agent_id": "sre_servicenow_001",
+  "loaded_at": "2025-06-21T14:13:14.800121",
+  "purpose": "Single agent testing with OpenAI provider",
+  "expected_tools": [
+    "search_incidents",
+    "create_incident",
+    "update_incident",
+    "calculate_slo_status",
+    "get_runbook"
+  ],
+  "test_scenarios": [
+    "Search for critical incidents",
+    "Create a new incident",
+    "Update incident status",
+    "Check SLO status for payment service",
+    "Get runbook for high latency"
+  ]
+}

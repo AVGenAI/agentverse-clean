@@ -1,0 +1,72 @@
+{
+  "test_run": "2025-06-20T17:00:12.083480",
+  "total_agents_tested": 5,
+  "summary": {
+    "passed": 0,
+    "failed": 0,
+    "skipped": 0,
+    "error": 5
+  },
+  "results": [
+    {
+      "agent": "OpenAISDK_Support_L1Support",
+      "agent_id": "e4db6630258191c1",
+      "tool_packages": [
+        "knowledge_management",
+        "service_desk",
+        "incident_management"
+      ],
+      "tests": [],
+      "status": "error",
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)"
+    },
+    {
+      "agent": "OpenAISDK_Engineering_DjangoExpert",
+      "agent_id": "d894cd44259769d6",
+      "tool_packages": [
+        "developer",
+        "catalog_builder",
+        "workflow_designer"
+      ],
+      "tests": [],
+      "status": "error",
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)"
+    },
+    {
+      "agent": "OpenAISDK_DevOps_prometheusmonitoringExpert",
+      "agent_id": "09a05edcee8ecba7",
+      "tool_packages": [
+        "change_coordinator",
+        "change_management",
+        "deployment_management"
+      ],
+      "tests": [],
+      "status": "error",
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)"
+    },
+    {
+      "agent": "OpenAISDK_Security_SecurityExpert",
+      "agent_id": "9f89488e978fe230",
+      "tool_packages": [
+        "compliance_management",
+        "vulnerability_management",
+        "security_operations"
+      ],
+      "tests": [],
+      "status": "error",
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)"
+    },
+    {
+      "agent": "OpenAISDK_Business_salesleadgenerationExpert",
+      "agent_id": "3e105e41a1ed7696",
+      "tool_packages": [
+        "project_manager",
+        "business_analyst",
+        "service_catalog"
+      ],
+      "tests": [],
+      "status": "error",
+      "error": "unhandled errors in a TaskGroup (1 sub-exception)"
+    }
+  ]
+}

@@ -1,0 +1,237 @@
+/* Glassmorphism Design System for AgentVerse */
+
+/* Base Dark Theme */
+:root {
+  --av-bg-primary: #0f0f0f;
+  --av-bg-secondary: #1a1a1a;
+  --av-accent-primary: #4db6ac;
+  --av-accent-secondary: #26a69a;
+  --av-accent-tertiary: #00897b;
+  --av-text-primary: #e0e6ed;
+  --av-text-secondary: #a0a9b8;
+  --av-glass-bg: rgba(0, 105, 92, 0.15);
+  --av-glass-border: rgba(77, 182, 172, 0.3);
+  --av-shadow-glow: rgba(77, 182, 172, 0.4);
+}
+
+/* Animated Background */
+.av-animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  overflow: hidden;
+}
+
+.av-animated-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    radial-gradient(circle at 20% 50%, #00695c 0%, transparent 50%),
+    radial-gradient(circle at 80% 80%, #1565c0 0%, transparent 50%),
+    radial-gradient(circle at 40% 20%, #5e35b1 0%, transparent 50%);
+  opacity: 0.15;
+  animation: breathe 15s ease-in-out infinite;
+}
+
+@keyframes breathe {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.05) rotate(1deg); }
+}
+
+/* Glass Card Component */
+.av-glass-card {
+  background: var(--av-glass-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid var(--av-glass-border);
+  border-radius: 20px;
+  padding: 30px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.av-glass-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(77, 182, 172, 0.1) 0%, transparent 70%);
+  animation: pulse 4s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.1); opacity: 0.8; }
+}
+
+.av-glass-card:hover {
+  transform: translateY(-5px) scale(1.02);
+  box-shadow: 0 10px 30px var(--av-shadow-glow);
+  border-color: rgba(77, 182, 172, 0.5);
+}
+
+/* Gradient Text Animation */
+.av-gradient-text {
+  background: linear-gradient(90deg, #fff, var(--av-accent-primary), #fff);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+/* Liquid Button */
+.av-liquid-btn {
+  position: relative;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, var(--av-accent-tertiary) 0%, var(--av-accent-secondary) 100%);
+  border: 2px solid transparent;
+  border-radius: 50px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  overflow: hidden;
+}
+
+.av-liquid-btn::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.2);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.av-liquid-btn:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.av-liquid-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px var(--av-shadow-glow);
+}
+
+/* Floating Action Button */
+.av-fab {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--av-accent-tertiary) 0%, var(--av-accent-secondary) 100%);
+  border: 2px solid var(--av-glass-border);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+}
+
+.av-fab:hover {
+  transform: translateY(-5px) rotate(90deg);
+  box-shadow: 0 10px 30px var(--av-shadow-glow);
+  border-color: rgba(77, 182, 172, 0.6);
+}
+
+/* Notification Toast */
+.av-toast {
+  background: linear-gradient(135deg, var(--av-accent-tertiary) 0%, var(--av-accent-secondary) 100%);
+  color: white;
+  padding: 15px 25px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Status Badges */
+.av-badge {
+  padding: 4px 12px;
+  border-radius: 15px;
+  font-size: 0.8em;
+  font-weight: bold;
+  backdrop-filter: blur(5px);
+}
+
+.av-badge-success {
+  background: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border: 1px solid #4caf50;
+}
+
+.av-badge-warning {
+  background: rgba(255, 193, 7, 0.2);
+  color: #ffc107;
+  border: 1px solid #ffc107;
+}
+
+.av-badge-error {
+  background: rgba(244, 67, 54, 0.2);
+  color: #ff5252;
+  border: 1px solid #ff5252;
+}
+
+.av-badge-info {
+  background: rgba(33, 150, 243, 0.2);
+  color: #2196f3;
+  border: 1px solid #2196f3;
+}
+
+/* Loading Animation */
+.av-loading {
+  display: inline-flex;
+  gap: 4px;
+}
+
+.av-loading-dot {
+  width: 8px;
+  height: 8px;
+  background: var(--av-accent-primary);
+  border-radius: 50%;
+  animation: bounce 1.4s ease-in-out infinite;
+}
+
+.av-loading-dot:nth-child(1) { animation-delay: -0.32s; }
+.av-loading-dot:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .av-glass-card {
+    padding: 20px;
+    border-radius: 15px;
+  }
+  
+  .av-liquid-btn {
+    padding: 12px 24px;
+  }
+}

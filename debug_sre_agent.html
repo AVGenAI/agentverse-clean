@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SRE Agent Debug</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .found { color: green; font-weight: bold; }
+        .not-found { color: red; }
+        .agent { margin: 5px 0; padding: 5px; background: #f0f0f0; }
+        .sre-agent { background: #e0ffe0; border: 2px solid green; }
+    </style>
+</head>
+<body>
+    <h1>SRE Agent Debug Tool</h1>
+    <button onclick="fetchAgents()">Fetch Agents</button>
+    <button onclick="location.reload()">Refresh Page</button>
+    
+    <div id="status"></div>
+    <div id="sre-agents"></div>
+    <div id="all-agents"></div>
+
+    <script>
+        async function fetchAgents() {
+            const status = document.getElementById('status');
+            const sreDiv = document.getElementById('sre-agents');
+            const allDiv = document.getElementById('all-agents');
+            
+            status.innerHTML = 'Fetching agents...';
+            
+            try {
+                const response = await fetch('http://localhost:8000/agents', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ limit: 100, offset: 0 })
+                });
+                
+                const data = await response.json();
+                const agents = data.agents;
+                
+                // Find SRE agents
+                const sreAgents = agents.filter(agent => 
+                    agent.display_name?.includes('SRE') || 
+                    agent.canonical_name?.includes('sre') ||
+                    agent.display_name?.includes('ServiceNow')
+                );
+                
+                status.innerHTML = `<span class="${sreAgents.length > 0 ? 'found' : 'not-found'}">
+                    Found ${sreAgents.length} SRE agents out of ${agents.length} total agents
+                </span>`;
+                
+                // Display SRE agents
+                sreDiv.innerHTML = '<h2>SRE Agents:</h2>';
+                sreAgents.forEach(agent => {
+                    sreDiv.innerHTML += `
+                        <div class="agent sre-agent">
+                            <strong>${agent.display_name}</strong> (${agent.canonical_name})<br>
+                            ID: ${agent.id}<br>
+                            Skills: ${agent.skills?.slice(0, 3).join(', ')}...
+                        </div>
+                    `;
+                });
+                
+                // Display first 10 agents
+                allDiv.innerHTML = '<h2>First 10 Agents:</h2>';
+                agents.slice(0, 10).forEach(agent => {
+                    const isSre = sreAgents.some(s => s.id === agent.id);
+                    allDiv.innerHTML += `
+                        <div class="agent ${isSre ? 'sre-agent' : ''}">
+                            ${agent.display_name || agent.canonical_name}
+                        </div>
+                    `;
+                });
+                
+            } catch (error) {
+                status.innerHTML = `<span class="not-found">Error: ${error.message}</span>`;
+            }
+        }
+        
+        // Auto-fetch on load
+        window.onload = fetchAgents;
+    </script>
+</body>
+</html>

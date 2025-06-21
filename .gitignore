@@ -1,0 +1,69 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+*.egg-info/
+dist/
+build/
+
+# Environment variables
+.env
+.env.local
+*.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+
+# Logs
+*.log
+logs/
+sre_agent.log
+
+# API keys and secrets
+*_key.txt
+*_secret.txt
+credentials.json
+
+# Node modules (for UI)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+*.pyc
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Backup files
+backups/
+*.backup
+*.bak
+
+# Test outputs
+test_reports/
+*.json.backup*
+
+# Cache
+.cache/
+agent_cache.json
+.agent_cache
+
+# ServiceNow
+servicenow_config.json
+snow_credentials.json
+
+# Large data files
+src/config/agentverse_agents_1000.json.backup*
+src/config/*.backup*
