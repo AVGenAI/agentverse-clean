@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useQuery } from '@tanstack/react-query'
 import { Search, MessageSquare, Bot, Brain, Sparkles, Filter, Grid, List, Plus, Cpu, Activity } from 'lucide-react'
 import axios from 'axios'
+import EnhancedAgentCard from '../components/EnhancedAgentCard'
 import '../styles/glass.css'
 
 const API_URL = 'http://localhost:8000'
@@ -13,22 +14,6 @@ const AgentListGlass = () => {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [viewMode, setViewMode] = useState('grid')
   const [showFilters, setShowFilters] = useState(false)
-
-  // Animated background orbs
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = e.clientX / window.innerWidth
-      const y = e.clientY / window.innerHeight
-      
-      document.querySelectorAll('.orb').forEach((orb, index) => {
-        const speed = (index + 1) * 0.01
-        orb.style.transform = `translate(${x * speed * 50}px, ${y * speed * 50}px)`
-      })
-    }
-    
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
 
   // Fetch agents
   const { data: agents, isLoading } = useQuery({
@@ -82,15 +67,8 @@ const AgentListGlass = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient text-white p-6">
-      {/* Animated Background */}
-      <div className="orb-container">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="p-6">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-5xl font-bold mb-4 gradient-text">AI Agent Universe</h1>
@@ -206,89 +184,13 @@ const AgentListGlass = () => {
               ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6' 
               : 'space-y-4'
           }>
-            {filteredAgents.map(agent => {
-              const status = getAgentStatus(agent)
-              
-              return (
-                <div
-                  key={agent.id}
-                  className={`glass-card p-6 hover:scale-[1.02] transition-all cursor-pointer ${
-                    viewMode === 'list' ? 'flex items-center justify-between' : ''
-                  }`}
-                  onClick={() => navigate(`/chat/${agent.id}`)}
-                >
-                  <div className={viewMode === 'list' ? 'flex items-center space-x-4' : ''}>
-                    {/* Avatar & Status */}
-                    <div className={`relative ${viewMode === 'list' ? '' : 'mb-4'}`}>
-                      <div className="text-5xl">{getAgentAvatar(agent)}</div>
-                      <div className={`absolute -bottom-1 -right-1 w-4 h-4 ${status.color} rounded-full border-2 border-gray-900`} />
-                    </div>
-
-                    {/* Agent Info */}
-                    <div className={viewMode === 'list' ? 'flex-1' : ''}>
-                      <h3 className="text-xl font-semibold gradient-text mb-1">
-                        {agent.display_name || agent.canonical_name}
-                      </h3>
-                      <p className="text-sm text-gray-400 mb-3">
-                        {agent.canonical_name}
-                      </p>
-
-                      {/* Skills */}
-                      <div className="flex flex-wrap gap-2 mb-4">
-                        {agent.skills?.slice(0, viewMode === 'list' ? 5 : 3).map(skill => (
-                          <span key={skill} className="glass-badge text-xs">
-                            {skill}
-                          </span>
-                        ))}
-                        {agent.skills?.length > (viewMode === 'list' ? 5 : 3) && (
-                          <span className="glass-badge text-xs opacity-50">
-                            +{agent.skills.length - (viewMode === 'list' ? 5 : 3)}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Capabilities Preview */}
-                      {viewMode === 'grid' && agent.capabilities?.primary_expertise && (
-                        <div className="text-xs text-gray-400 mb-4">
-                          <p className="line-clamp-2">
-                            Expert in: {agent.capabilities.primary_expertise.join(', ')}
-                          </p>
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className={`flex ${viewMode === 'list' ? 'gap-2' : 'gap-2 justify-between'} items-center`}>
-                    {/* Stats */}
-                    <div className="flex items-center gap-3 text-xs text-gray-400">
-                      <span className="flex items-center gap-1">
-                        <Brain className="w-4 h-4" />
-                        {agent.llm_config?.model || 'GPT-4'}
-                      </span>
-                      {agent.mcp_server_name && (
-                        <span className="flex items-center gap-1">
-                          <Cpu className="w-4 h-4" />
-                          MCP
-                        </span>
-                      )}
-                    </div>
-
-                    {/* Chat Button */}
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation()
-                        navigate(`/chat/${agent.id}`)
-                      }}
-                      className="liquid-button py-2 px-4 text-sm flex items-center"
-                    >
-                      <MessageSquare className="w-4 h-4 mr-1" />
-                      Chat
-                    </button>
-                  </div>
-                </div>
-              )
-            })}
+            {filteredAgents.map(agent => (
+              <EnhancedAgentCard 
+                key={agent.id} 
+                agent={agent} 
+                viewMode={viewMode} 
+              />
+            ))}
           </div>
         )}
 

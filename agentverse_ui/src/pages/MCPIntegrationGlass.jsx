@@ -12,21 +12,6 @@ const MCPIntegrationGlass = () => {
   const [activeTab, setActiveTab] = useState('coupling')
   const [agentSearch, setAgentSearch] = useState('')
 
-  // Animated background orbs
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = e.clientX / window.innerWidth
-      const y = e.clientY / window.innerHeight
-      
-      document.querySelectorAll('.orb').forEach((orb, index) => {
-        const speed = (index + 1) * 0.01
-        orb.style.transform = `translate(${x * speed * 50}px, ${y * speed * 50}px)`
-      })
-    }
-    
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
 
   // Fetch agents
   const { data: agents, isLoading: agentsLoading, refetch: refetchAgents } = useQuery({
@@ -62,6 +47,7 @@ const MCPIntegrationGlass = () => {
   // Create coupling mutation
   const createCoupling = useMutation({
     mutationFn: async (data) => {
+      console.log('Sending coupling data:', data);
       const response = await axios.post(`${API_URL}/api/mcp/couplings`, data)
       return response.data
     },
@@ -69,6 +55,46 @@ const MCPIntegrationGlass = () => {
       refetchCouplings()
       setSelectedAgent(null)
       setSelectedServer(null)
+    },
+    onError: (error) => {
+      console.error('Coupling creation failed:', error);
+      console.error('Error response:', error.response?.data);
+      console.error('Error status:', error.response?.status);
+    }
+  })
+
+  // Test coupling mutation
+  const testCoupling = useMutation({
+    mutationFn: async (couplingId) => {
+      const response = await axios.post(`${API_URL}/api/mcp/couplings/${couplingId}/test`)
+      return response.data
+    },
+    onSuccess: (data) => {
+      console.log('Test results:', data)
+      alert(`Test ${data.overall === 'passed' ? 'Passed ✅' : 'Failed ❌'}\n\n${data.tests.map(t => `${t.name}: ${t.status}`).join('\n')}`)
+    }
+  })
+
+  // Activate coupling mutation
+  const activateCoupling = useMutation({
+    mutationFn: async (couplingId) => {
+      const response = await axios.put(`${API_URL}/api/mcp/couplings/${couplingId}/activate`)
+      return response.data
+    },
+    onSuccess: () => {
+      refetchCouplings()
+      alert('Coupling activated successfully! ✅')
+    }
+  })
+
+  // Delete coupling mutation
+  const deleteCoupling = useMutation({
+    mutationFn: async (couplingId) => {
+      const response = await axios.delete(`${API_URL}/api/mcp/couplings/${couplingId}`)
+      return response.data
+    },
+    onSuccess: () => {
+      refetchCouplings()
     }
   })
 
@@ -99,15 +125,8 @@ const MCPIntegrationGlass = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient text-white p-6">
-      {/* Animated Background */}
-      <div className="orb-container">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="p-6">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-10">
           <h1 className="text-5xl font-bold mb-4 gradient-text">MCP Integration Hub</h1>
@@ -282,10 +301,18 @@ const MCPIntegrationGlass = () => {
                     </div>
                   </div>
                   <button
-                    onClick={() => createCoupling.mutate({
-                      agentId: selectedAgent.id,
-                      serverId: selectedServer.id
-                    })}
+                    onClick={() => {
+                      console.log('Creating coupling with:', {
+                        agentId: selectedAgent.id,
+                        serverId: selectedServer.id,
+                        agent: selectedAgent,
+                        server: selectedServer
+                      });
+                      createCoupling.mutate({
+                        agentId: selectedAgent.id,
+                        serverId: selectedServer.id
+                      });
+                    }}
                     disabled={createCoupling.isLoading}
                     className="liquid-button flex items-center"
                   >
@@ -326,13 +353,36 @@ const MCPIntegrationGlass = () => {
                 </div>
 
                 <div className="flex gap-2">
-                  <button className="flex-1 liquid-button py-2 text-sm">
-                    <Activity className="w-4 h-4 mr-1 inline" />
-                    Test
-                  </button>
-                  <button className="flex-1 liquid-button py-2 text-sm bg-red-500/20 border-red-500/30">
+                  {!coupling.active ? (
+                    <button 
+                      onClick={() => activateCoupling.mutate(coupling.id)}
+                      disabled={activateCoupling.isLoading}
+                      className="flex-1 liquid-button py-2 text-sm bg-green-500/20 border-green-500/30"
+                    >
+                      <Zap className="w-4 h-4 mr-1 inline" />
+                      {activateCoupling.isLoading ? 'Activating...' : 'Activate'}
+                    </button>
+                  ) : (
+                    <button 
+                      onClick={() => testCoupling.mutate(coupling.id)}
+                      disabled={testCoupling.isLoading}
+                      className="flex-1 liquid-button py-2 text-sm"
+                    >
+                      <Activity className="w-4 h-4 mr-1 inline" />
+                      {testCoupling.isLoading ? 'Testing...' : 'Test'}
+                    </button>
+                  )}
+                  <button 
+                    onClick={() => {
+                      if (window.confirm('Are you sure you want to disconnect this coupling?')) {
+                        deleteCoupling.mutate(coupling.id)
+                      }
+                    }}
+                    disabled={deleteCoupling.isLoading}
+                    className="flex-1 liquid-button py-2 text-sm bg-red-500/20 border-red-500/30"
+                  >
                     <Unlink className="w-4 h-4 mr-1 inline" />
-                    Disconnect
+                    {deleteCoupling.isLoading ? 'Disconnecting...' : 'Disconnect'}
                   </button>
                 </div>
               </div>

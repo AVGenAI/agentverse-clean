@@ -10,10 +10,10 @@ import json
 import asyncio
 from datetime import datetime
 import uuid
-from agent_manager import agent_manager
+from agentverse_api.agent_manager import agent_manager
 
 # Import routers
-from routers import mcp_router, pipeline_router
+from agentverse_api.routers import mcp_router, pipeline_router
 
 app = FastAPI(
     title="AgentVerse API",
@@ -33,8 +33,22 @@ app.add_middleware(
 # Load agents data
 AGENTS_DATA = []
 try:
-    with open("../src/config/agentverse_agents_1000.json", "r") as f:
-        AGENTS_DATA = json.load(f)
+    import os
+    # Try different paths to find the config file
+    config_paths = [
+        "../src/config/agentverse_agents_1000.json",
+        "src/config/agentverse_agents_1000.json",
+        "/Users/vallu/z_AV_Labs_Gemini_June2025/aiagents/src/config/agentverse_agents_1000.json"
+    ]
+    
+    for path in config_paths:
+        if os.path.exists(path):
+            with open(path, "r") as f:
+                AGENTS_DATA = json.load(f)
+                print(f"✅ Loaded {len(AGENTS_DATA)} agents from: {path}")
+                break
+    else:
+        print(f"Warning: Could not find agents data in any of the paths: {config_paths}")
 except Exception as e:
     print(f"Warning: Could not load agents data: {e}")
 
@@ -166,15 +180,32 @@ async def get_agents(query: AgentQuery):
     agents = []
     for agent in paginated:
         metadata = agent.get("enhanced_metadata", {})
+        
+        # Extract domain and type from canonical name
+        canonical_parts = metadata.get("canonical_name", "").split(".")
+        domain = canonical_parts[1] if len(canonical_parts) > 1 else "general"
+        agent_type = canonical_parts[2] if len(canonical_parts) > 2 else "specialist"
+        
         agents.append({
             "id": metadata.get("agent_uuid"),
             "canonical_name": metadata.get("canonical_name"),
             "display_name": metadata.get("display_name"),
+            "name": metadata.get("display_name"),  # For backward compatibility
             "avatar": metadata.get("avatar_emoji"),
             "skills": metadata.get("capabilities", {}).get("primary_expertise", []),
             "tools": list(metadata.get("capabilities", {}).get("tools_mastery", {}).keys()),
             "collaboration_style": metadata.get("collaboration", {}).get("style", []),
-            "trust_score": metadata.get("quality", {}).get("trust_score", 0.95)
+            "trust_score": metadata.get("quality", {}).get("trust_score", 0.95),
+            # Enhanced fields for EnhancedAgentCard
+            "enhanced_metadata": metadata,
+            "domain": domain,
+            "type": agent_type,
+            "capabilities": metadata.get("capabilities", {}),
+            "instructions": agent.get("instructions", ""),
+            "version": metadata.get("version", "1.0.0"),
+            "model_preferences": metadata.get("model_preferences", {"primary": "gpt-4o-mini"}),
+            "mcp_server": metadata.get("mcp_coupling", {}).get("server_name"),
+            "status": "active"  # Default status - in production this would be dynamic
         })
     
     return {

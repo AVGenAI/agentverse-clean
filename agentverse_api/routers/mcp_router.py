@@ -12,15 +12,16 @@ import asyncio
 import sys
 import os
 
-# Add parent directory to path for imports
-sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
-
-from agent_mcp_coupling_system import (
+# Import from agentverse_api
+from agentverse_api.agent_mcp_coupling_system import (
     AgentMCPCoupler,
     MCPServerConfig,
     MCPServerType,
     CompatibilityLevel
 )
+
+# Import from parent directory (one level up from agentverse_api)
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
 from servicenow_config_loader import load_servicenow_config
 
 router = APIRouter(prefix="/api/mcp", tags=["mcp"])
@@ -108,7 +109,7 @@ async def get_active_couplings():
 async def check_compatibility(request: CompatibilityCheckRequest):
     """Check compatibility between an agent and MCP server"""
     # Load actual agent data
-    from main import AGENTS_DATA
+    from agentverse_api.main import AGENTS_DATA
     
     agent = None
     for a in AGENTS_DATA:
@@ -155,7 +156,7 @@ async def check_compatibility(request: CompatibilityCheckRequest):
 async def create_coupling(request: CreateCouplingRequest):
     """Create a new agent-MCP coupling"""
     # Load actual agent data
-    from main import AGENTS_DATA
+    from agentverse_api.main import AGENTS_DATA
     
     agent = None
     for a in AGENTS_DATA:
@@ -248,7 +249,7 @@ async def test_coupling(coupling_id: str):
 @router.put("/couplings/{coupling_id}/activate")
 async def activate_coupling(coupling_id: str):
     """Activate an MCP coupling"""
-    coupling = coupler.get_coupling(coupling_id)
+    coupling = coupler.active_couplings.get(coupling_id)
     
     if not coupling:
         raise HTTPException(status_code=404, detail="Coupling not found")
@@ -261,7 +262,7 @@ async def activate_coupling(coupling_id: str):
     # For now, we're marking it as active to show in the UI
     
     return {
-        "id": coupling.id,
+        "id": coupling_id,
         "active": coupling.active,
         "activated_at": coupling.activated_at.isoformat() if hasattr(coupling, 'activated_at') else None,
         "message": "Coupling activated successfully"

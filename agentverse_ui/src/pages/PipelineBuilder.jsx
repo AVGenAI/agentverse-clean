@@ -24,12 +24,14 @@ const PipelineBuilder = () => {
   const [isRunning, setIsRunning] = useState(false)
   const [showConfigModal, setShowConfigModal] = useState(false)
   const [currentPipelineId, setCurrentPipelineId] = useState(null)
+  const [connectionMode, setConnectionMode] = useState(false)
+  const [connectionStart, setConnectionStart] = useState(null)
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const [executionResult, setExecutionResult] = useState(null)
+  const [executionError, setExecutionError] = useState(null)
   const canvasRef = useRef(null)
   
-  // Apply VectorShift theme
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', 'vectorshift')
-  }, [])
+  // Theme is now managed by LayoutGlass component
   
   // Initialize with default pipeline
   useEffect(() => {
@@ -148,8 +150,13 @@ const PipelineBuilder = () => {
   }
 
   const connectNodes = (fromId, toId) => {
+    // Don't allow self-connections
+    if (fromId === toId) return
+    
+    // Check if connection already exists
     if (!connections.find(c => c.from === fromId && c.to === toId)) {
       setConnections([...connections, { from: fromId, to: toId }])
+      toast.success('Nodes connected')
     }
   }
   
@@ -188,6 +195,15 @@ const PipelineBuilder = () => {
   }
   
   const savePipeline = async () => {
+    // Validate pipeline has required nodes
+    const hasInput = nodes.some(n => n.type === 'input')
+    const hasOutput = nodes.some(n => n.type === 'output')
+    
+    if (!hasInput || !hasOutput) {
+      toast.error('Pipeline must have at least one Input and one Output node')
+      return
+    }
+    
     const pipelineData = {
       name: pipelineName,
       description: pipelineDescription,
@@ -221,14 +237,27 @@ const PipelineBuilder = () => {
       return
     }
     
-    // Get input from user (in real app, this would be a modal)
-    const inputData = prompt('Enter input data for the pipeline:')
+    // Get input from user
+    const inputData = prompt('Enter input data for the pipeline (e.g., "Check system status"):')
     if (inputData === null) return
     
     setIsRunning(true)
+    setExecutionResult(null)
+    setExecutionError(null)
+    
     executePipelineMutation.mutate(
       { id: currentPipelineId, inputData },
       {
+        onSuccess: (data) => {
+          setExecutionResult(data)
+          // Show result in a better way
+          if (data.result) {
+            toast.success('Pipeline completed successfully!')
+          }
+        },
+        onError: (error) => {
+          setExecutionError(error.response?.data?.detail || error.message)
+        },
         onSettled: () => {
           setIsRunning(false)
         }
@@ -237,7 +266,7 @@ const PipelineBuilder = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient p-6">
+    <div className="p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
@@ -252,7 +281,7 @@ const PipelineBuilder = () => {
             <button 
               onClick={runPipeline}
               disabled={isRunning || nodes.length === 0}
-              className="vs-button-primary flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
+              className="av-button-primary flex items-center disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isRunning ? (
                 <><Loader className="w-4 h-4 mr-2 animate-spin" /> Running...</>
@@ -268,13 +297,49 @@ const PipelineBuilder = () => {
               <Save className="w-4 h-4 mr-2" />
               {currentPipelineId ? 'Update' : 'Save'}
             </button>
+            {connections.length > 0 && (
+              <button
+                onClick={() => {
+                  if (confirm('Clear all connections?')) {
+                    setConnections([])
+                    toast.success('All connections cleared')
+                  }
+                }}
+                className="px-4 py-2 text-sm text-red-400 hover:text-red-300 transition-colors"
+              >
+                Clear Connections
+              </button>
+            )}
+            <button
+              onClick={() => {
+                // Create a simple test pipeline
+                const testNodes = [
+                  { id: 'test-input', type: 'input', label: 'User Input', position: { x: 100, y: 200 }, config: {} },
+                  { id: 'test-text', type: 'text', label: 'Make Uppercase', position: { x: 350, y: 200 }, config: { operation: 'uppercase' } },
+                  { id: 'test-output', type: 'output', label: 'Result', position: { x: 600, y: 200 }, config: {} }
+                ]
+                const testConnections = [
+                  { from: 'test-input', to: 'test-text' },
+                  { from: 'test-text', to: 'test-output' }
+                ]
+                setNodes(testNodes)
+                setConnections(testConnections)
+                setPipelineName('Test Text Pipeline')
+                setPipelineDescription('Simple text transformation pipeline')
+                toast.success('Test pipeline created! Click Save, then Run.')
+              }}
+              className="px-4 py-2 text-sm text-blue-400 hover:text-blue-300 transition-colors"
+              title="Create a simple test pipeline"
+            >
+              Load Test Pipeline
+            </button>
           </div>
         </div>
 
         <div className="grid grid-cols-12 gap-6">
           {/* Sidebar */}
           <div className="col-span-3">
-            <div className="vs-card">
+            <div className="av-card">
               <h3 className="text-xl font-bold mb-6 text-white">Components</h3>
               
               <div className="space-y-3">
@@ -298,7 +363,7 @@ const PipelineBuilder = () => {
 
             {/* Node Properties */}
             {selectedNode && (
-              <div className="vs-card mt-6">
+              <div className="av-card mt-6">
                 <h3 className="text-xl font-bold mb-6 flex items-center justify-between text-white">
                   <span className="flex items-center">
                     <Settings className="w-5 h-5 mr-2 text-purple-400" />
@@ -355,8 +420,8 @@ const PipelineBuilder = () => {
                       >
                         <option value="">Select an agent...</option>
                         {agentsData?.agents?.map(agent => (
-                          <option key={agent.agent_id} value={agent.agent_id}>
-                            {agent.agent_name} ({agent.model})
+                          <option key={agent.id} value={agent.id}>
+                            {agent.display_name || agent.canonical_name} ({agent.llm_config?.model || 'default'})
                           </option>
                         ))}
                       </select>
@@ -434,7 +499,19 @@ const PipelineBuilder = () => {
 
           {/* Canvas */}
           <div className="col-span-9">
-            <div className="vs-card h-[600px] relative overflow-hidden bg-gray-900/50" ref={canvasRef}>
+            <div 
+              className="av-card h-[600px] relative overflow-hidden bg-gray-900/50" 
+              ref={canvasRef}
+              onMouseMove={(e) => {
+                if (connectionMode && connectionStart) {
+                  const rect = canvasRef.current.getBoundingClientRect()
+                  setMousePosition({
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                  })
+                }
+              }}
+            >
               {/* Pipeline Info */}
               <div className="absolute top-4 left-4 z-10">
                 <input
@@ -465,7 +542,21 @@ const PipelineBuilder = () => {
               </div>
 
               {/* Connections */}
-              <svg className="absolute inset-0 w-full h-full pointer-events-none">
+              <svg className="absolute inset-0 w-full h-full" style={{ pointerEvents: connectionMode ? 'none' : 'auto' }}>
+                {/* Draw temporary connection line when in connection mode */}
+                {connectionMode && connectionStart && (
+                  <line
+                    x1={connectionStart.position.x + 80}
+                    y1={connectionStart.position.y + 40}
+                    x2={mousePosition.x}
+                    y2={mousePosition.y}
+                    stroke="#a855f7"
+                    strokeWidth="2"
+                    strokeDasharray="5,5"
+                    opacity="0.6"
+                  />
+                )}
+                
                 {connections.map((conn, idx) => {
                   const fromNode = nodes.find(n => n.id === conn.from)
                   const toNode = nodes.find(n => n.id === conn.to)
@@ -481,7 +572,14 @@ const PipelineBuilder = () => {
                         stroke="url(#purpleGradient)"
                         strokeWidth="3"
                         strokeDasharray="5,5"
-                        className="animate-pulse"
+                        className="animate-pulse cursor-pointer hover:stroke-red-500"
+                        onClick={(e) => {
+                          e.stopPropagation()
+                          if (confirm('Delete this connection?')) {
+                            removeConnection(conn.from, conn.to)
+                          }
+                        }}
+                        style={{ pointerEvents: 'stroke' }}
                       />
                       <circle
                         cx={toNode.position.x}
@@ -516,15 +614,35 @@ const PipelineBuilder = () => {
                     draggable
                     onDragStart={(e) => handleNodeDragStart(e, node)}
                     onDragEnd={(e) => handleNodeDragEnd(e, node)}
-                    className={`absolute cursor-move transition-all group ${
+                    className={`absolute transition-all group ${
                       selectedNode?.id === node.id ? 'scale-110 z-20' : ''
-                    } ${isDragging && dragNode?.id === node.id ? 'opacity-50' : ''}`}
+                    } ${isDragging && dragNode?.id === node.id ? 'opacity-50' : ''} ${
+                      connectionMode ? 'cursor-crosshair' : 'cursor-move'
+                    } ${
+                      connectionMode && connectionStart?.id === node.id ? 'ring-4 ring-purple-500 rounded-xl' : ''
+                    }`}
                     style={{
                       left: `${node.position.x}px`,
                       top: `${node.position.y}px`,
                       minWidth: '160px'
                     }}
-                    onClick={() => setSelectedNode(node)}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      if (connectionMode) {
+                        if (!connectionStart) {
+                          // Start connection
+                          setConnectionStart(node)
+                          toast.info(`Connect from ${node.label}...`)
+                        } else if (connectionStart.id !== node.id) {
+                          // Complete connection
+                          connectNodes(connectionStart.id, node.id)
+                          setConnectionStart(null)
+                          setConnectionMode(false)
+                        }
+                      } else {
+                        setSelectedNode(node)
+                      }
+                    }}
                   >
                     <div className={`bg-gray-800 border-2 ${
                       selectedNode?.id === node.id ? 'border-purple-500' : 'border-gray-700'
@@ -554,13 +672,31 @@ const PipelineBuilder = () => {
               })}
 
               {/* Instructions */}
-              <div className="absolute bottom-4 left-4 text-xs text-gray-500">
-                <p>Click components to add • Click nodes to select • Drag to connect</p>
+              <div className="absolute bottom-4 left-4 right-4 flex justify-between items-center">
+                <p className="text-xs text-gray-500">
+                  {connectionMode 
+                    ? 'Click a node to start connection, then click another to connect them' 
+                    : 'Click components to add • Click nodes to select • Drag to move'}
+                </p>
+                <button
+                  onClick={() => {
+                    setConnectionMode(!connectionMode)
+                    setConnectionStart(null)
+                  }}
+                  className={`px-3 py-1 rounded-lg text-xs font-medium transition-all ${
+                    connectionMode 
+                      ? 'bg-purple-500 text-white' 
+                      : 'glass-button'
+                  }`}
+                >
+                  <GitBranch className="w-3 h-3 inline mr-1" />
+                  {connectionMode ? 'Cancel Connect' : 'Connect Mode'}
+                </button>
               </div>
             </div>
 
             {/* Pipeline Status */}
-            <div className="vs-card mt-6">
+            <div className="av-card mt-6">
               <h3 className="text-lg font-semibold mb-3 text-white">Pipeline Status</h3>
               
               {/* Validation Status */}
@@ -588,12 +724,33 @@ const PipelineBuilder = () => {
               )}
               
               {/* Execution Result */}
-              {executePipelineMutation.data && (
-                <div className="p-4 bg-gray-800 rounded-lg border border-gray-700">
-                  <h4 className="text-sm font-medium text-gray-300 mb-2">Last Execution Result:</h4>
-                  <pre className="text-xs text-white overflow-auto max-h-32">
-                    {JSON.stringify(executePipelineMutation.data, null, 2)}
-                  </pre>
+              {executionResult && (
+                <div className="p-4 bg-green-900/20 rounded-lg border border-green-600/50">
+                  <h4 className="text-sm font-medium text-green-300 mb-2 flex items-center gap-2">
+                    <Check className="w-4 h-4" /> Execution Result:
+                  </h4>
+                  <div className="text-sm text-white overflow-auto max-h-40">
+                    {typeof executionResult.result === 'string' ? (
+                      <p className="whitespace-pre-wrap">{executionResult.result}</p>
+                    ) : (
+                      <pre className="text-xs">
+                        {JSON.stringify(executionResult.result || executionResult, null, 2)}
+                      </pre>
+                    )}
+                  </div>
+                  {executionResult.execution_id && (
+                    <p className="text-xs text-gray-400 mt-2">Execution ID: {executionResult.execution_id}</p>
+                  )}
+                </div>
+              )}
+              
+              {/* Execution Error */}
+              {executionError && (
+                <div className="p-4 bg-red-900/20 rounded-lg border border-red-600/50">
+                  <h4 className="text-sm font-medium text-red-300 mb-2 flex items-center gap-2">
+                    <X className="w-4 h-4" /> Execution Error:
+                  </h4>
+                  <p className="text-sm text-red-200">{executionError}</p>
                 </div>
               )}
               

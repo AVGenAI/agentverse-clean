@@ -17,21 +17,6 @@ const ChatGlass = () => {
   const messagesEndRef = useRef(null)
   const chatContainerRef = useRef(null)
 
-  // Animated background orbs
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = e.clientX / window.innerWidth
-      const y = e.clientY / window.innerHeight
-      
-      document.querySelectorAll('.orb').forEach((orb, index) => {
-        const speed = (index + 1) * 0.01
-        orb.style.transform = `translate(${x * speed * 50}px, ${y * speed * 50}px)`
-      })
-    }
-    
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
 
   // Fetch agent details
   const { data: agent } = useQuery({
@@ -116,15 +101,7 @@ const ChatGlass = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient text-white">
-      {/* Animated Background */}
-      <div className="orb-container">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-      </div>
-
-      <div className="h-screen flex flex-col relative z-10">
+    <div className="h-screen flex flex-col">
         {/* Header */}
         <div className="glass-nav p-4">
           <div className="max-w-6xl mx-auto flex items-center justify-between">
@@ -268,7 +245,6 @@ const ChatGlass = () => {
           </div>
         </div>
       </div>
-    </div>
   )
 }
 

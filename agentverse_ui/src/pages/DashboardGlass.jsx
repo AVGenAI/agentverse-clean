@@ -15,22 +15,6 @@ const DashboardGlass = () => {
   const navigate = useNavigate()
   const [currentTime, setCurrentTime] = useState(new Date())
 
-  // Animated background orbs
-  useEffect(() => {
-    const handleMouseMove = (e) => {
-      const x = e.clientX / window.innerWidth
-      const y = e.clientY / window.innerHeight
-      
-      document.querySelectorAll('.orb').forEach((orb, index) => {
-        const speed = (index + 1) * 0.01
-        orb.style.transform = `translate(${x * speed * 50}px, ${y * speed * 50}px)`
-      })
-    }
-    
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
   // Update time
   useEffect(() => {
     const timer = setInterval(() => setCurrentTime(new Date()), 1000)
@@ -120,19 +104,12 @@ const DashboardGlass = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient text-white p-6">
-      {/* Animated Background */}
-      <div className="orb-container">
-        <div className="orb orb-1"></div>
-        <div className="orb orb-2"></div>
-        <div className="orb orb-3"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto relative z-10">
+    <div className="p-6">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-4xl font-bold gradient-text mb-2">AgentVerse Dashboard</h1>
+            <h1 className="text-4xl font-bold gradient-text mb-2">Agent Verse Dashboard</h1>
             <p className="flex items-center gap-2" style={{ color: 'var(--text-secondary)' }}>
               <Clock className="w-4 h-4" />
               {currentTime.toLocaleString()}

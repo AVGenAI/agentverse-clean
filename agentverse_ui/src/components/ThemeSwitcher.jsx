@@ -3,7 +3,7 @@ import { Palette, Check } from 'lucide-react'
 import '../styles/glass.css'
 
 const themes = [
-  { id: 'vectorshift', name: 'VectorShift', preview: ['#7c3aed', '#a855f7'], badge: 'Pro' },
+  { id: 'agentverse', name: 'AgentVerse', preview: ['#7c3aed', '#a855f7'], badge: 'Pro' },
   { id: 'default', name: 'Minimalist', preview: ['rgba(255,255,255,0.1)', 'rgba(255,255,255,0.05)'] },
   { id: 'corporate', name: 'Corporate', preview: ['rgba(59,130,246,0.08)', 'rgba(59,130,246,0.04)'], badge: 'Clean' },
   { id: 'purple-dream', name: 'Purple Dream', preview: ['#667eea', '#764ba2'] },
@@ -52,7 +52,7 @@ const ThemeSwitcher = () => {
         el.classList.add('from-black', 'via-gray-900', 'to-black')
       } else if (themeId === 'aurora') {
         el.classList.add('from-blue-900', 'via-purple-900', 'to-blue-900')
-      } else if (themeId === 'vectorshift') {
+      } else if (themeId === 'agentverse') {
         el.classList.add('from-black', 'via-gray-900', 'to-black')
       }
     })
@@ -83,20 +83,20 @@ const ThemeSwitcher = () => {
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute left-0 mt-2 w-64 glass-card p-4 z-50">
+          <div className="absolute left-0 mt-2 w-72 glass-card p-4 z-50">
             <h3 className="text-sm font-semibold mb-3 text-gray-300">Choose Theme</h3>
             <div className="space-y-2">
               {themes.map((theme) => (
                 <button
                   key={theme.id}
                   onClick={() => selectTheme(theme.id)}
-                  className={`w-full glass-card p-3 hover:scale-[1.02] transition-all flex items-center justify-between ${
+                  className={`theme-switcher-item glass-card p-3 hover:scale-[1.02] transition-all ${
                     currentTheme === theme.id ? 'ring-2 ring-white/30' : ''
                   }`}
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 flex-1">
                     <div
-                      className="w-8 h-8 rounded-full relative overflow-hidden"
+                      className="w-8 h-8 rounded-full relative overflow-hidden flex-shrink-0"
                       style={{
                         background: `linear-gradient(135deg, ${theme.preview[0]}, ${theme.preview[1]})`
                       }}
@@ -105,17 +105,17 @@ const ThemeSwitcher = () => {
                         <div className="absolute inset-0 animate-pulse bg-white opacity-30"></div>
                       )}
                     </div>
-                    <div className="flex-1">
-                      <span className="text-sm font-medium">{theme.name}</span>
+                    <div className="theme-name-container">
+                      <span className="theme-name text-sm font-medium">{theme.name}</span>
                       {theme.badge && (
-                        <span className="ml-2 text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/70">
+                        <span className="theme-badge text-xs px-2 py-0.5 rounded-full bg-white/10 text-white/70">
                           {theme.badge}
                         </span>
                       )}
                     </div>
                   </div>
                   {currentTheme === theme.id && (
-                    <Check className="w-4 h-4 text-green-400" />
+                    <Check className="w-4 h-4 text-green-400 flex-shrink-0" />
                   )}
                 </button>
               ))}

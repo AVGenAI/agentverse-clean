@@ -1,25 +1,108 @@
 version: '3.8'
 
 services:
+  # PostgreSQL Database (Structured Data)
+  postgres:
+    image: postgres:15-alpine
+    container_name: agentverse-postgres
+    environment:
+      POSTGRES_DB: agentverse
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - agentverse-network
+
+  # Redis Cache (High-Speed Cache)
+  redis:
+    image: redis:7-alpine
+    container_name: agentverse-redis
+    command: >
+      redis-server
+      --appendonly yes
+      --maxmemory 2gb
+      --maxmemory-policy allkeys-lru
+    volumes:
+      - redis-data:/data
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - agentverse-network
+
+  # MongoDB (Document Store)
+  mongodb:
+    image: mongo:7.0
+    container_name: agentverse-mongodb
+    environment:
+      MONGO_INITDB_DATABASE: agentverse
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - agentverse-network
+
   # Backend API Service
   backend:
     build:
-      context: ./agentverse_api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: agentverse_api/Dockerfile
     container_name: agentverse-backend
     ports:
       - "8000:8000"
     environment:
       - API_HOST=0.0.0.0
       - API_PORT=8000
+      - POSTGRES_HOST=postgres
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=agentverse
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
       - REDIS_URL=redis://redis:6379
+      - MONGO_HOST=mongodb
+      - MONGO_PORT=27017
+      - MONGO_DB=agentverse
+      - USE_OLLAMA=${USE_OLLAMA:-false}
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
     volumes:
       - ./src:/app/src
       - ./config:/app/config
+      - ./.env:/app/.env:ro
     depends_on:
-      - redis
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
     networks:
       - agentverse-network
+    restart: unless-stopped
 
   # Frontend UI Service
   frontend:
@@ -35,35 +118,65 @@ services:
       - backend
     networks:
       - agentverse-network
+    restart: unless-stopped
 
-  # Redis Cache Service
-  redis:
-    image: redis:7-alpine
-    container_name: agentverse-redis
-    ports:
-      - "6379:6379"
+  # Ollama Service (Local LLM - Optional)
+  ollama:
+    image: ollama/ollama:latest
+    container_name: agentverse-ollama
     volumes:
-      - redis-data:/data
+      - ollama-data:/root/.ollama
+    ports:
+      - "11434:11434"
     networks:
       - agentverse-network
+    profiles:
+      - with-ollama
+    deploy:
+      resources:
+        limits:
+          memory: 8G
+    restart: unless-stopped
 
-  # Nginx Reverse Proxy (Optional)
+  # ServiceNow MCP Server (Optional)
+  servicenow-mcp:
+    image: anthropic/mcp-server-servicenow:latest
+    container_name: agentverse-servicenow-mcp
+    environment:
+      - SERVICENOW_INSTANCE=${SERVICENOW_INSTANCE}
+      - SERVICENOW_USERNAME=${SERVICENOW_USERNAME}
+      - SERVICENOW_PASSWORD=${SERVICENOW_PASSWORD}
+    ports:
+      - "3001:3001"
+    networks:
+      - agentverse-network
+    profiles:
+      - with-mcp
+    restart: unless-stopped
+
+  # Nginx Reverse Proxy
   nginx:
     image: nginx:alpine
     container_name: agentverse-nginx
     ports:
       - "80:80"
+      - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
     depends_on:
       - backend
       - frontend
     networks:
       - agentverse-network
+    restart: unless-stopped
 
 networks:
   agentverse-network:
     driver: bridge
 
 volumes:
+  postgres-data:
   redis-data:
+  mongo-data:
+  ollama-data:

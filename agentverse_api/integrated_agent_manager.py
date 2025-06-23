@@ -241,9 +241,21 @@ class IntegratedAgentManager:
         """Load agent configs and couplings"""
         # Load agents
         try:
-            with open("src/config/agentverse_agents_1000.json", "r") as f:
-                self.agent_configs = json.load(f)
-                logger.info(f"Loaded {len(self.agent_configs)} agents")
+            # Try different paths to find the config file
+            config_paths = [
+                "../src/config/agentverse_agents_1000.json",
+                "src/config/agentverse_agents_1000.json",
+                "/Users/vallu/z_AV_Labs_Gemini_June2025/aiagents/src/config/agentverse_agents_1000.json"
+            ]
+            
+            for path in config_paths:
+                if os.path.exists(path):
+                    with open(path, "r") as f:
+                        self.agent_configs = json.load(f)
+                        logger.info(f"Loaded {len(self.agent_configs)} agents from: {path}")
+                        break
+            else:
+                logger.error(f"Could not find agent configs in any of the paths: {config_paths}")
         except Exception as e:
             logger.error(f"Failed to load agents: {e}")
         

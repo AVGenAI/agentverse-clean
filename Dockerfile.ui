@@ -1,0 +1,31 @@
+# Dockerfile for AgentVerse UI
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY agentverse_ui/package*.json ./
+
+# Install dependencies
+RUN npm ci
+
+# Copy source files
+COPY agentverse_ui/ .
+
+# Build the application
+RUN npm run build
+
+# Use nginx to serve the static files
+FROM nginx:alpine
+
+# Copy custom nginx config
+COPY agentverse_ui/nginx.conf /etc/nginx/conf.d/default.conf
+
+# Copy built files from build stage
+COPY --from=0 /app/dist /usr/share/nginx/html
+
+# Expose port
+EXPOSE 3000
+
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]

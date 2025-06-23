@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Check, Sparkles, Brain, Cpu, Globe, Zap, Server, Cloud } from 'lucide-react'
 import '../styles/glass.css'
@@ -7,10 +7,7 @@ const LLMProviders = () => {
   const navigate = useNavigate()
   const [selectedProvider, setSelectedProvider] = useState(null)
 
-  // Apply VectorShift theme
-  useEffect(() => {
-    document.documentElement.setAttribute('data-theme', 'vectorshift')
-  }, [])
+  // Theme is now managed by LayoutGlass component
 
   const providers = [
     {
@@ -94,7 +91,7 @@ const LLMProviders = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient p-6">
+    <div className="p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
@@ -102,7 +99,7 @@ const LLMProviders = () => {
             Choose an AI model
           </h1>
           <p className="text-xl text-gray-300">
-            Access the latest models through the AgentVerse platform
+            Access the latest models through the Agent Verse system
           </p>
         </div>
 
@@ -114,7 +111,7 @@ const LLMProviders = () => {
               onClick={() => handleProviderSelect(provider)}
               className="group cursor-pointer"
             >
-              <div className={`vs-card transition-all hover:scale-105 hover:border-purple-500/50 relative ${
+              <div className={`av-card transition-all hover:scale-105 hover:border-purple-500/50 relative ${
                 selectedProvider?.id === provider.id ? 'border-purple-500 bg-purple-900/20' : ''
               }`}>
                 {/* Icon */}
@@ -171,7 +168,7 @@ const LLMProviders = () => {
 
         {/* Bottom Actions */}
         <div className="text-center">
-          <div className="vs-card inline-block px-12 py-8">
+          <div className="av-card inline-block px-12 py-8">
             <h3 className="text-2xl font-bold text-white mb-4">
               Ready to get started?
             </h3>
@@ -183,7 +180,7 @@ const LLMProviders = () => {
             <div className="flex items-center justify-center gap-4">
               <button
                 onClick={() => navigate('/agents')}
-                className="vs-button-primary"
+                className="av-button-primary"
                 disabled={!selectedProvider}
               >
                 Get started

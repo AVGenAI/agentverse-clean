@@ -1,4 +1,4 @@
-import DashboardVectorShift from './DashboardVectorShift'
+import DashboardAgentVerse from './DashboardAgentVerse'
 
-// Use the VectorShift design version
-export default DashboardVectorShift
+// Use the AgentVerse design version
+export default DashboardAgentVerse

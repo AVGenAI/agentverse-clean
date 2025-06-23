@@ -11,9 +11,19 @@ import {
   Network,
   Trophy,
   Target,
-  Clock
+  Clock,
+  Code,
+  Database,
+  Globe,
+  Hash,
+  GitBranch,
+  Award,
+  Layers,
+  CheckCircle,
+  XCircle
 } from 'lucide-react'
 import axios from 'axios'
+import '../styles/glass.css'
 
 const API_URL = 'http://localhost:8000'
 
@@ -31,7 +41,7 @@ export default function AgentDetails() {
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-purple-600"></div>
+        <div className="liquid-loader"></div>
       </div>
     )
   }
@@ -39,9 +49,9 @@ export default function AgentDetails() {
   if (!agent) {
     return (
       <div className="p-6 max-w-7xl mx-auto">
-        <div className="text-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Agent not found</h2>
-          <Link to="/agents" className="mt-4 text-purple-600 hover:text-purple-700">
+        <div className="glass-card text-center p-8">
+          <h2 className="text-2xl font-bold gradient-text">Agent not found</h2>
+          <Link to="/agents" className="mt-4 inline-block liquid-button">
             Back to agents
           </Link>
         </div>
@@ -54,47 +64,47 @@ export default function AgentDetails() {
       {/* Back Button */}
       <Link 
         to="/agents" 
-        className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-6"
+        className="inline-flex items-center gap-2 glass-card p-3 hover:scale-105 transition-transform mb-6"
       >
         <ArrowLeft className="h-4 w-4" />
         Back to Agents
       </Link>
 
       {/* Agent Header */}
-      <div className="bg-white dark:bg-gray-800 rounded-xl p-8 shadow-sm border border-gray-200 dark:border-gray-700 mb-6">
+      <div className="glass-card p-8 mb-6">
         <div className="flex items-start gap-6">
           <div className="text-6xl">{agent.avatar || '🤖'}</div>
           <div className="flex-1">
-            <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            <h1 className="text-3xl font-bold gradient-text mb-2">
               {agent.display_name}
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 mb-4">
+            <p className="text-lg text-secondary mb-4">
               {agent.canonical_name}
             </p>
             <div className="flex items-center gap-6 text-sm">
               <div className="flex items-center gap-2">
-                <Shield className="h-4 w-4 text-green-500" />
-                <span>Trust Score: {(agent.trust_score * 100).toFixed(0)}%</span>
+                <Shield className="h-4 w-4" style={{ color: 'var(--accent-gradient-start)' }} />
+                <span className="text-secondary">Trust Score: {(agent.trust_score * 100).toFixed(0)}%</span>
               </div>
               <div className="flex items-center gap-2">
-                <Star className="h-4 w-4 text-yellow-500" />
-                <span>Performance: {agent.performance_metrics?.success_rate || 95}%</span>
+                <Star className="h-4 w-4" style={{ color: 'var(--accent-gradient-end)' }} />
+                <span className="text-secondary">Performance: {agent.performance_metrics?.success_rate || 95}%</span>
               </div>
               <div className="flex items-center gap-2">
-                <Clock className="h-4 w-4 text-blue-500" />
-                <span>Response Time: {agent.performance_metrics?.avg_response_time || '1.2s'}</span>
+                <Clock className="h-4 w-4" style={{ color: 'var(--primary-gradient-start)' }} />
+                <span className="text-secondary">Response Time: {agent.performance_metrics?.avg_response_time || '1.2s'}</span>
               </div>
             </div>
           </div>
           <div className="flex gap-3">
             <Link
               to={`/chat/${agent.id}`}
-              className="px-6 py-3 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition-colors inline-flex items-center gap-2"
+              className="liquid-button inline-flex items-center gap-2"
             >
               <MessageSquare className="h-5 w-5" />
               Start Chat
             </Link>
-            <button className="px-6 py-3 border border-gray-300 dark:border-gray-600 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors inline-flex items-center gap-2">
+            <button className="glass-button inline-flex items-center gap-2">
               <Users className="h-5 w-5" />
               Add to Team
             </button>
@@ -107,20 +117,20 @@ export default function AgentDetails() {
         {/* Left Column - Details */}
         <div className="lg:col-span-2 space-y-6">
           {/* Capabilities */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <Zap className="h-5 w-5 text-purple-600" />
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Zap className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
               Capabilities
             </h2>
             
             {/* Primary Expertise */}
             <div className="mb-6">
-              <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-3">Primary Expertise</h3>
+              <h3 className="font-medium text-secondary mb-3">Primary Expertise</h3>
               <div className="flex flex-wrap gap-2">
                 {agent.capabilities?.primary_expertise?.map((skill, idx) => (
                   <span
                     key={idx}
-                    className="px-3 py-1.5 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 rounded-lg text-sm font-medium"
+                    className="glass-badge"
                   >
                     {skill}
                   </span>
@@ -131,12 +141,12 @@ export default function AgentDetails() {
             {/* Secondary Skills */}
             {agent.capabilities?.secondary_skills && (
               <div className="mb-6">
-                <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-3">Secondary Skills</h3>
+                <h3 className="font-medium text-secondary mb-3">Secondary Skills</h3>
                 <div className="flex flex-wrap gap-2">
                   {agent.capabilities.secondary_skills.map((skill, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm"
+                      className="glass-badge"
                     >
                       {skill}
                     </span>
@@ -148,12 +158,12 @@ export default function AgentDetails() {
             {/* Tools */}
             {agent.capabilities?.tools && (
               <div>
-                <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-3">Tools & Technologies</h3>
+                <h3 className="font-medium text-secondary mb-3">Tools & Technologies</h3>
                 <div className="flex flex-wrap gap-2">
                   {agent.capabilities.tools.map((tool, idx) => (
                     <span
                       key={idx}
-                      className="px-3 py-1.5 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-lg text-sm"
+                      className="glass-badge"
                     >
                       {tool}
                     </span>
@@ -163,39 +173,73 @@ export default function AgentDetails() {
             )}
           </div>
 
+          {/* Instructions & Behavior */}
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Shield className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
+              Instructions & Behavior
+            </h2>
+            
+            {agent.instructions ? (
+              <div className="space-y-4">
+                <div className="p-4 glass-card rounded-lg">
+                  <p className="text-sm text-secondary whitespace-pre-wrap">
+                    {agent.instructions}
+                  </p>
+                </div>
+                
+                {/* Behavior Traits */}
+                {agent.enhanced_metadata?.behavior && (
+                  <div>
+                    <h3 className="font-medium text-secondary mb-2">Behavior Traits</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {Object.entries(agent.enhanced_metadata.behavior).map(([key, value], idx) => (
+                        <span key={idx} className="glass-badge text-xs">
+                          {key.replace(/_/g, ' ')}: {value}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p className="text-sm text-muted">No specific instructions configured</p>
+            )}
+          </div>
+
           {/* Collaboration Network */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <Network className="h-5 w-5 text-purple-600" />
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Network className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
               Collaboration Network
             </h2>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Upstream Dependencies */}
               <div>
-                <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-3">Works Well With</h3>
+                <h3 className="font-medium text-secondary mb-3">Works Well With</h3>
                 {agent.collaboration?.upstream_dependencies?.map((dep, idx) => (
-                  <div key={idx} className="mb-2 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <span className="font-medium">{dep}</span>
+                  <div key={idx} className="mb-2 p-3 glass-card rounded-lg">
+                    <span className="font-medium text-primary">{dep}</span>
                   </div>
                 ))}
               </div>
 
               {/* Downstream Dependents */}
               <div>
-                <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-3">Supports These Agents</h3>
+                <h3 className="font-medium text-secondary mb-3">Supports These Agents</h3>
                 {agent.collaboration?.downstream_dependents?.map((dep, idx) => (
-                  <div key={idx} className="mb-2 p-3 bg-gray-50 dark:bg-gray-700 rounded-lg">
-                    <span className="font-medium">{dep}</span>
+                  <div key={idx} className="mb-2 p-3 glass-card rounded-lg">
+                    <span className="font-medium text-primary">{dep}</span>
                   </div>
                 ))}
               </div>
             </div>
 
             {/* Collaboration Style */}
-            <div className="mt-6 p-4 bg-purple-50 dark:bg-purple-900/20 rounded-lg">
-              <h3 className="font-medium text-gray-700 dark:text-gray-300 mb-2">Collaboration Style</h3>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
+            <div className="mt-6 p-4 glass-card rounded-lg">
+              <h3 className="font-medium text-secondary mb-2">Collaboration Style</h3>
+              <p className="text-sm text-secondary">
                 {agent.collaboration_style?.join(', ')}
               </p>
             </div>
@@ -205,82 +249,232 @@ export default function AgentDetails() {
         {/* Right Column - Stats & Meta */}
         <div className="space-y-6">
           {/* Performance Metrics */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <Trophy className="h-5 w-5 text-purple-600" />
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Trophy className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
               Performance
             </h2>
             
             <div className="space-y-4">
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Success Rate</span>
-                  <span className="font-medium">{agent.performance_metrics?.success_rate || 95}%</span>
+                  <span className="text-secondary">Success Rate</span>
+                  <span className="font-medium text-primary">{agent.performance_metrics?.success_rate || 95}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div className="w-full glass-card rounded-full h-2">
                   <div 
-                    className="bg-green-500 h-2 rounded-full"
-                    style={{ width: `${agent.performance_metrics?.success_rate || 95}%` }}
+                    className="h-2 rounded-full"
+                    style={{ 
+                      width: `${agent.performance_metrics?.success_rate || 95}%`,
+                      background: 'linear-gradient(90deg, var(--accent-gradient-start), var(--accent-gradient-end))'
+                    }}
                   />
                 </div>
               </div>
 
               <div>
                 <div className="flex justify-between text-sm mb-1">
-                  <span>Reliability</span>
-                  <span className="font-medium">{agent.performance_metrics?.reliability || 98}%</span>
+                  <span className="text-secondary">Reliability</span>
+                  <span className="font-medium text-primary">{agent.performance_metrics?.reliability || 98}%</span>
                 </div>
-                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                <div className="w-full glass-card rounded-full h-2">
                   <div 
-                    className="bg-blue-500 h-2 rounded-full"
-                    style={{ width: `${agent.performance_metrics?.reliability || 98}%` }}
+                    className="h-2 rounded-full"
+                    style={{ 
+                      width: `${agent.performance_metrics?.reliability || 98}%`,
+                      background: 'linear-gradient(90deg, var(--primary-gradient-start), var(--primary-gradient-end))'
+                    }}
                   />
                 </div>
               </div>
 
-              <div className="pt-2 border-t border-gray-200 dark:border-gray-700">
+              <div className="pt-2 border-t" style={{ borderColor: 'var(--glass-border)' }}>
                 <div className="flex justify-between text-sm">
-                  <span>Tasks Completed</span>
-                  <span className="font-medium">{agent.performance_metrics?.tasks_completed || '2,847'}</span>
+                  <span className="text-secondary">Tasks Completed</span>
+                  <span className="font-medium text-primary">{agent.performance_metrics?.tasks_completed || '2,847'}</span>
                 </div>
               </div>
             </div>
           </div>
 
           {/* Metadata */}
-          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 shadow-sm border border-gray-200 dark:border-gray-700">
-            <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-              <Target className="h-5 w-5 text-purple-600" />
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Target className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
               Agent Info
             </h2>
             
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Version</span>
-                <span className="font-medium">{agent.version || '1.0.0'}</span>
+                <span className="text-muted">Agent ID</span>
+                <span className="font-medium text-xs text-secondary">{agent.id}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Created</span>
-                <span className="font-medium">{agent.created_at || 'June 2025'}</span>
+                <span className="text-muted">Canonical Name</span>
+                <span className="font-medium text-xs truncate ml-2 text-secondary">{agent.canonical_name}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Domain</span>
-                <span className="font-medium capitalize">{agent.domain?.replace(/_/g, ' ')}</span>
+                <span className="text-muted">Version</span>
+                <span className="font-medium text-primary">{agent.version || '1.0.0'}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600 dark:text-gray-400">Subdomain</span>
-                <span className="font-medium capitalize">{agent.subdomain?.replace(/_/g, ' ')}</span>
+                <span className="text-muted">Created</span>
+                <span className="font-medium text-primary">{agent.created_at || 'June 2025'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Created By</span>
+                <span className="font-medium text-primary">{agent.enhanced_metadata?.created_by || 'System'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Domain</span>
+                <span className="font-medium capitalize text-primary">{agent.domain?.replace(/_/g, ' ')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Subdomain</span>
+                <span className="font-medium capitalize text-primary">{agent.subdomain?.replace(/_/g, ' ')}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Type</span>
+                <span className="font-medium capitalize text-primary">{agent.enhanced_metadata?.taxonomy?.type || 'Specialist'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Model</span>
+                <span className="font-medium text-primary">{agent.enhanced_metadata?.model_preferences?.primary || 'GPT-4'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Tools Available</span>
+                <span className="font-medium text-primary">{agent.tools?.length || agent.enhanced_metadata?.tools?.length || 0}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">MCP Server</span>
+                <span className="font-medium" style={{ color: 'var(--accent-gradient-start)' }}>{agent.enhanced_metadata?.mcp_coupling?.server_name || 'None'}</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-muted">Language Support</span>
+                <span className="font-medium text-primary">{agent.enhanced_metadata?.model_preferences?.languages?.join(', ') || 'English'}</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Tools & Integrations */}
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Code className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
+              Tools & Integrations
+            </h2>
+            
+            <div className="space-y-4">
+              {/* Tools List */}
+              {agent.enhanced_metadata?.tools && agent.enhanced_metadata.tools.length > 0 ? (
+                <div className="space-y-2">
+                  {agent.enhanced_metadata.tools.map((tool, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-2 glass-card rounded">
+                      <span className="text-sm font-medium text-primary">{tool.name || tool}</span>
+                      <CheckCircle className="h-4 w-4" style={{ color: 'var(--accent-gradient-start)' }} />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <p className="text-sm text-muted">No specific tools configured</p>
+              )}
+              
+              {/* MCP Status */}
+              <div className="pt-4 border-t" style={{ borderColor: 'var(--glass-border)' }}>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm text-muted">MCP Connection</span>
+                  {agent.enhanced_metadata?.mcp_coupling?.server_name ? (
+                    <span className="flex items-center gap-2 text-sm" style={{ color: 'var(--accent-gradient-start)' }}>
+                      <Database className="h-4 w-4" />
+                      {agent.enhanced_metadata.mcp_coupling.server_name}
+                    </span>
+                  ) : (
+                    <span className="flex items-center gap-2 text-sm text-muted">
+                      <XCircle className="h-4 w-4" />
+                      Not Connected
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Taxonomy & Classification */}
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Layers className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
+              Taxonomy
+            </h2>
+            
+            <div className="space-y-3">
+              <div className="grid grid-cols-2 gap-3 text-sm">
+                <div>
+                  <span className="text-muted">Domain</span>
+                  <p className="font-medium mt-1 text-primary">{agent.domain || 'general'}</p>
+                </div>
+                <div>
+                  <span className="text-muted">Type</span>
+                  <p className="font-medium mt-1 text-primary">{agent.enhanced_metadata?.taxonomy?.type || 'specialist'}</p>
+                </div>
+                <div>
+                  <span className="text-muted">Specialization</span>
+                  <p className="font-medium mt-1 text-primary">{agent.enhanced_metadata?.taxonomy?.specialization || agent.subdomain || 'general'}</p>
+                </div>
+                <div>
+                  <span className="text-muted">Industry</span>
+                  <p className="font-medium mt-1 text-primary">{agent.enhanced_metadata?.taxonomy?.industry || 'Technology'}</p>
+                </div>
+              </div>
+              
+              {/* Discovery Keywords */}
+              {agent.enhanced_metadata?.discovery?.keywords && (
+                <div className="pt-3 border-t" style={{ borderColor: 'var(--glass-border)' }}>
+                  <p className="text-sm text-muted mb-2">Discovery Keywords</p>
+                  <div className="flex flex-wrap gap-1">
+                    {agent.enhanced_metadata.discovery.keywords.slice(0, 8).map((keyword, idx) => (
+                      <span key={idx} className="glass-badge text-xs">
+                        {keyword}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Quality Metrics */}
+          <div className="glass-card p-6">
+            <h2 className="text-xl font-semibold text-primary mb-4 flex items-center gap-2">
+              <Award className="h-5 w-5" style={{ color: 'var(--primary-gradient-start)' }} />
+              Quality Metrics
+            </h2>
+            
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted">Certification Level</span>
+                <span className="text-sm font-medium text-primary">{agent.enhanced_metadata?.quality?.certification_level || 'Standard'}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted">Testing Status</span>
+                <span className="text-sm font-medium" style={{ color: 'var(--accent-gradient-start)' }}>{agent.enhanced_metadata?.quality?.testing_status || 'Passed'}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted">Last Updated</span>
+                <span className="text-sm font-medium text-primary">{agent.enhanced_metadata?.updated_at || agent.created_at || 'June 2025'}</span>
+              </div>
+              <div className="flex items-center justify-between">
+                <span className="text-sm text-muted">Maintenance</span>
+                <span className="text-sm font-medium text-primary">{agent.enhanced_metadata?.lifecycle?.maintenance_schedule || 'Regular'}</span>
               </div>
             </div>
           </div>
 
           {/* Quick Actions */}
-          <div className="bg-gradient-to-r from-purple-600 to-blue-600 rounded-xl p-6 text-white">
-            <h3 className="font-semibold mb-3">Need help with this agent?</h3>
-            <p className="text-sm text-purple-100 mb-4">
+          <div className="glass-card p-6" style={{ background: 'linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end))' }}>
+            <h3 className="font-semibold mb-3 text-primary">Need help with this agent?</h3>
+            <p className="text-sm text-secondary mb-4">
               Check out our documentation or join the community
             </p>
-            <button className="w-full bg-white/20 backdrop-blur-sm px-4 py-2 rounded-lg font-medium hover:bg-white/30 transition-colors">
+            <button className="w-full glass-button font-medium">
               View Documentation
             </button>
           </div>

@@ -20,6 +20,10 @@ from mcp.client.stdio import stdio_client
 from mcp.server.fastmcp import FastMCP
 
 # Import our modules
+import sys
+import os
+# Add parent directory to path for external modules
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from mcp_agent_client import AgentMCPClient
 from servicenow_agent_adapter import ServiceNowAgentAdapter
 
@@ -75,6 +79,7 @@ class AgentMCPCoupling:
     active: bool = False
     session: Optional[ClientSession] = None
     created_at: datetime = field(default_factory=datetime.now)
+    activated_at: Optional[datetime] = None
 
 class AgentAdapter(ABC):
     """Abstract base for agent adapters"""
@@ -720,8 +725,19 @@ async def demonstrate_coupling_system():
     print("="*60)
     
     # Load sample agents
-    with open("src/config/agentverse_agents_1000.json", 'r') as f:
-        agents = json.load(f)[:5]  # Use first 5 agents for demo
+    import os
+    config_paths = [
+        "../src/config/agentverse_agents_1000.json",
+        "src/config/agentverse_agents_1000.json",
+        "/Users/vallu/z_AV_Labs_Gemini_June2025/aiagents/src/config/agentverse_agents_1000.json"
+    ]
+    
+    agents = []
+    for path in config_paths:
+        if os.path.exists(path):
+            with open(path, 'r') as f:
+                agents = json.load(f)[:5]  # Use first 5 agents for demo
+                break
     
     # Show available MCP servers
     print("\n📡 Available MCP Servers:")

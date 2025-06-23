@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { Home, Bot, MessageSquare, Zap, Settings, Sparkles } from 'lucide-react'
-import ThemeSwitcher from './ThemeSwitcher'
+import ThemeSwitcherEnhanced from './ThemeSwitcherEnhanced'
 import '../styles/glass.css'
 
 const NavigationGlass = () => {
@@ -26,14 +26,14 @@ const NavigationGlass = () => {
         <div className="flex items-center justify-between">
           {/* Left Section: Theme Switcher and Logo */}
           <div className="flex items-center space-x-6">
-            <ThemeSwitcher />
+            <ThemeSwitcherEnhanced />
             
             <Link to="/" className="flex items-center space-x-3 group">
               <div className="relative">
                 <Sparkles className="w-8 h-8 text-purple-400 group-hover:text-purple-300 transition-colors" />
                 <div className="absolute inset-0 blur-xl bg-purple-400 opacity-50 group-hover:opacity-70 transition-opacity"></div>
               </div>
-              <span className="text-2xl font-bold gradient-text">AgentVerse</span>
+              <span className="text-2xl font-bold gradient-text">Agent Verse</span>
             </Link>
           </div>
 

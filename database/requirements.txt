@@ -1,0 +1,4 @@
+asyncpg==0.29.0
+redis[hiredis]==5.0.1
+motor==3.3.2
+pymongo==4.6.1

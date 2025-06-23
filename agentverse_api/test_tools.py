@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Direct test of agent manager to verify tools are being created"""
 import asyncio
-from agent_manager import agent_manager
+from agentverse_api.agent_manager import agent_manager
 
 async def test_agent_tools():
     print("Testing Agent Tools Creation")

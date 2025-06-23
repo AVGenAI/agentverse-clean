@@ -11,9 +11,8 @@ from datetime import datetime
 
 # Try to import pipeline_engine, but handle import errors gracefully
 try:
-    # Add parent directory to path
-    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-    from pipeline_engine import PipelineEngine, Pipeline, PipelineNode, NodeType
+    # Import from agentverse_api
+    from agentverse_api.pipeline_engine import PipelineEngine, Pipeline, PipelineNode, NodeType
     PIPELINE_ENGINE_AVAILABLE = True
 except ImportError as e:
     print(f"Warning: Could not import pipeline_engine: {e}")

@@ -1,1 +1,1 @@
-"""AgentVerse - Agentverse Ui"""
+"""Agent Verse - Agentverse Ui"""

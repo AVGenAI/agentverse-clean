@@ -17,7 +17,7 @@
   --bg-gradient-end: #141414;
   
   --glass-bg: rgba(255, 255, 255, 0.02);
-  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(255, 255, 255, 0.15);
   --glass-shadow: rgba(0, 0, 0, 0.2);
   
   --text-primary: rgba(255, 255, 255, 0.95);
@@ -26,6 +26,8 @@
   
   --orb-opacity: 0.15;
   --blur-strength: 20px;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.15);
 }
 
 /* Purple Dream Theme */
@@ -40,28 +42,33 @@
   --bg-gradient-mid: #16213e;
   --bg-gradient-end: #0f3460;
   --glass-bg: rgba(255, 255, 255, 0.05);
-  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-border: rgba(102, 126, 234, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
   --orb-opacity: 0.6;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(102, 126, 234, 0.3);
 }
 
 /* Arctic Frost Theme */
 [data-theme="arctic"] {
-  --primary-gradient-start: rgba(255, 255, 255, 0.1);
-  --primary-gradient-end: rgba(220, 230, 255, 0.05);
-  --secondary-gradient-start: rgba(180, 200, 255, 0.08);
-  --secondary-gradient-end: rgba(160, 180, 255, 0.04);
-  --accent-gradient-start: rgba(100, 150, 255, 0.15);
-  --accent-gradient-end: rgba(80, 130, 255, 0.08);
+  --primary-gradient-start: #2563eb;
+  --primary-gradient-end: #1d4ed8;
+  --secondary-gradient-start: #3b82f6;
+  --secondary-gradient-end: #2563eb;
+  --accent-gradient-start: #60a5fa;
+  --accent-gradient-end: #3b82f6;
   --bg-gradient-start: #f8f9fa;
   --bg-gradient-mid: #f0f2f5;
   --bg-gradient-end: #e9ecef;
   --glass-bg: rgba(0, 0, 0, 0.02);
-  --glass-border: rgba(0, 0, 0, 0.06);
+  --glass-border: rgba(0, 0, 0, 0.12);
   --glass-shadow: rgba(0, 0, 0, 0.1);
   --text-primary: rgba(0, 0, 0, 0.9);
   --text-secondary: rgba(0, 0, 0, 0.7);
   --text-muted: rgba(0, 0, 0, 0.5);
   --orb-opacity: 0.1;
+  --card-bg: rgba(255, 255, 255, 0.95);
+  --card-border: rgba(0, 0, 0, 0.12);
 }
 
 /* Midnight Mono Theme */
@@ -76,8 +83,11 @@
   --bg-gradient-mid: #050505;
   --bg-gradient-end: #0a0a0a;
   --glass-bg: rgba(255, 255, 255, 0.01);
-  --glass-border: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.1);
+  --glass-shadow: rgba(0, 0, 0, 0.5);
   --orb-opacity: 0.05;
+  --card-bg: rgba(255, 255, 255, 0.02);
+  --card-border: rgba(255, 255, 255, 0.1);
 }
 
 /* Sunset Blush Theme */
@@ -92,7 +102,11 @@
   --bg-gradient-mid: #1f1f1f;
   --bg-gradient-end: #242424;
   --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(255, 94, 87, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
   --orb-opacity: 0.3;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(255, 94, 87, 0.3);
 }
 
 /* Ocean Depths Theme */
@@ -107,7 +121,11 @@
   --bg-gradient-mid: #002244;
   --bg-gradient-end: #003366;
   --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-border: rgba(0, 180, 216, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.3);
   --orb-opacity: 0.2;
+  --card-bg: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(0, 180, 216, 0.3);
 }
 
 /* Neon Pulse Theme */
@@ -123,7 +141,10 @@
   --bg-gradient-end: #000000;
   --glass-bg: rgba(255, 255, 255, 0.05);
   --glass-border: rgba(255, 255, 255, 0.2);
+  --glass-shadow: rgba(255, 0, 255, 0.3);
   --orb-opacity: 0.8;
+  --card-bg: rgba(255, 255, 255, 0.05);
+  --card-border: rgba(255, 0, 255, 0.4);
 }
 
 /* Aurora Borealis Theme */
@@ -138,17 +159,21 @@
   --bg-gradient-mid: #004e92;
   --bg-gradient-end: #000428;
   --glass-bg: rgba(255, 255, 255, 0.03);
+  --glass-border: rgba(0, 255, 170, 0.3);
+  --glass-shadow: rgba(0, 0, 0, 0.4);
   --orb-opacity: 0.5;
+  --card-bg: rgba(255, 255, 255, 0.04);
+  --card-border: rgba(0, 255, 170, 0.3);
 }
 
 /* Corporate Glass Theme */
 [data-theme="corporate"] {
-  --primary-gradient-start: rgba(59, 130, 246, 0.08);
-  --primary-gradient-end: rgba(59, 130, 246, 0.04);
-  --secondary-gradient-start: rgba(107, 114, 128, 0.06);
-  --secondary-gradient-end: rgba(107, 114, 128, 0.02);
-  --accent-gradient-start: rgba(59, 130, 246, 0.1);
-  --accent-gradient-end: rgba(59, 130, 246, 0.05);
+  --primary-gradient-start: #3b82f6;
+  --primary-gradient-end: #2563eb;
+  --secondary-gradient-start: #64748b;
+  --secondary-gradient-end: #475569;
+  --accent-gradient-start: #60a5fa;
+  --accent-gradient-end: #3b82f6;
   --bg-gradient-start: #ffffff;
   --bg-gradient-mid: #fafafa;
   --bg-gradient-end: #f5f5f5;
@@ -160,10 +185,12 @@
   --text-muted: rgba(0, 0, 0, 0.5);
   --orb-opacity: 0.03;
   --blur-strength: 10px;
+  --card-bg: rgba(255, 255, 255, 0.9);
+  --card-border: rgba(59, 130, 246, 0.2);
 }
 
-/* VectorShift Theme */
-[data-theme="vectorshift"] {
+/* AgentVerse Theme */
+[data-theme="agentverse"] {
   --primary-gradient-start: #7c3aed;
   --primary-gradient-end: #a855f7;
   --secondary-gradient-start: #1e1b2e;
@@ -182,7 +209,7 @@
   --orb-opacity: 0.1;
   --blur-strength: 12px;
   --card-bg: #1a1825;
-  --card-border: rgba(124, 58, 237, 0.15);
+  --card-border: rgba(124, 58, 237, 0.3);
 }
 
 /* Glass Card Base */
@@ -487,10 +514,22 @@
   -webkit-text-fill-color: transparent;
   background-clip: text;
   text-fill-color: transparent;
+  /* Fallback for light themes */
+  color: var(--text-primary);
 }
 
-/* VectorShift specific gradient text override */
-[data-theme="vectorshift"] .gradient-text {
+/* Light theme gradient text override */
+[data-theme="arctic"] .gradient-text,
+[data-theme="corporate"] .gradient-text {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
+}
+
+/* AgentVerse specific gradient text override */
+[data-theme="agentverse"] .gradient-text {
   background: linear-gradient(135deg, #a855f7, #c084fc);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -595,35 +634,38 @@
   }
 }
 
-/* VectorShift Specific Styles */
-[data-theme="vectorshift"] .glass-card {
+/* AgentVerse Specific Styles */
+[data-theme="agentverse"] .glass-card {
   background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1px solid rgba(124, 58, 237, 0.3);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
   backdrop-filter: none;
 }
 
-[data-theme="vectorshift"] .liquid-button {
+[data-theme="agentverse"] .liquid-button {
   background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
   border: none;
   box-shadow: 0 4px 20px rgba(124, 58, 237, 0.4);
 }
 
-[data-theme="vectorshift"] .liquid-button:hover {
+[data-theme="agentverse"] .liquid-button:hover {
   box-shadow: 0 6px 30px rgba(168, 85, 247, 0.6);
 }
 
-/* VectorShift Card Styles */
-.vs-card {
+
+/* AgentVerse Card Styles */
+.av-card {
   background: var(--card-bg);
-  border: 1px solid var(--card-border);
+  border: 1px solid rgba(124, 58, 237, 0.3);
   border-radius: 16px;
   padding: 24px;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.8);
 }
 
-.vs-card-header {
+
+.av-card-header {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -634,13 +676,13 @@
   margin-bottom: 16px;
 }
 
-.vs-card-icon {
+.av-card-icon {
   width: 32px;
   height: 32px;
   color: white;
 }
 
-.vs-button-primary {
+.av-button-primary {
   background: linear-gradient(135deg, var(--primary-gradient-start), var(--primary-gradient-end));
   color: white;
   padding: 12px 24px;
@@ -705,6 +747,62 @@
   border-left: 8px solid var(--primary-gradient-start);
   border-top: 4px solid transparent;
   border-bottom: 4px solid transparent;
+}
+
+/* Theme Switcher Alignment Fix */
+.theme-switcher-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  min-height: 48px;
+}
+
+.theme-name-container {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+}
+
+.theme-name {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.theme-badge {
+  flex-shrink: 0;
+  margin-left: 8px;
+  white-space: nowrap;
+}
+
+/* Text utilities */
+.text-primary {
+  color: var(--text-primary) !important;
+}
+
+.text-secondary {
+  color: var(--text-secondary) !important;
+}
+
+.text-muted {
+  color: var(--text-muted) !important;
+}
+
+/* Force proper text colors in glass cards */
+.glass-card h1,
+.glass-card h2,
+.glass-card h3,
+.glass-card h4,
+.glass-card h5,
+.glass-card h6 {
+  color: var(--text-primary);
+}
+
+.glass-card p,
+.glass-card span:not(.gradient-text),
+.glass-card div {
+  color: var(--text-secondary);
 }
 
 /* Responsive adjustments */

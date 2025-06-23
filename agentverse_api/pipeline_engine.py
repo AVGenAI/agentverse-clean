@@ -10,9 +10,9 @@ from datetime import datetime
 from enum import Enum
 import logging
 
-from agent_manager import AgentManager
-from integrated_agent_manager import IntegratedAgentManager
-from agent_mcp_coupling_system import AgentMCPCoupler
+from agentverse_api.agent_manager import AgentManager
+from agentverse_api.integrated_agent_manager import IntegratedAgentManager
+from agentverse_api.agent_mcp_coupling_system import AgentMCPCoupler
 
 logger = logging.getLogger(__name__)
 

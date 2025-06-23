@@ -8,7 +8,7 @@ from agents import Agent, Runner, function_tool
 from typing import List
 import json
 import asyncio
-from ollama_provider import ollama_provider
+from agentverse_api.ollama_provider import ollama_provider
 
 load_dotenv()
 
@@ -29,8 +29,21 @@ class AgentManager:
         
         # Load agent configurations
         try:
-            with open("../src/config/agentverse_agents_1000.json", "r") as f:
-                self.agent_configs = json.load(f)
+            # Try different paths to find the config file
+            config_paths = [
+                "../src/config/agentverse_agents_1000.json",
+                "src/config/agentverse_agents_1000.json",
+                "/Users/vallu/z_AV_Labs_Gemini_June2025/aiagents/src/config/agentverse_agents_1000.json"
+            ]
+            
+            for path in config_paths:
+                if os.path.exists(path):
+                    with open(path, "r") as f:
+                        self.agent_configs = json.load(f)
+                        print(f"✅ Loaded agent configs from: {path}")
+                        break
+            else:
+                print(f"Warning: Could not find agent configs in any of the paths: {config_paths}")
         except Exception as e:
             print(f"Warning: Could not load agent configs: {e}")
         
